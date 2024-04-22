@@ -1,4 +1,6 @@
 <?php
+//$r = (array) $result;echo json_encode($r);exit;
+
 function numToText($num)
 {
     $ones = [
@@ -96,43 +98,43 @@ function numToText($num)
 
 function res($m)
 {
-    if ($m > 90) {
+    if ($m >= 91) {
         return [
             'g' => 'A+',
             'r' => 'Result is excellent. Keep it up.',
             'c' => 'success text-light',
         ];
-    } elseif ($m > 80) {
+    } elseif ($m >= 81) {
         return [
             'g' => 'A',
             'r' => 'Result is best but need keep it up.',
             'c' => 'success text-light',
         ];
-    } elseif ($m > 70) {
+    } elseif ($m >= 71) {
         return [
             'g' => 'B+',
             'r' => 'Result is better Need improve & keep it up.',
             'c' => 'success text-light',
         ];
-    } elseif ($m > 60) {
+    } elseif ($m >= 61) {
         return [
             'g' => 'B',
             'r' => 'Result is good but not fair. Increase hard work.',
             'c' => 'warning',
         ];
-    } elseif ($m > 50) {
+    } elseif ($m >= 51) {
         return [
             'g' => 'C+',
             'r' => 'Result is average! Increase hard work.',
             'c' => 'warning',
         ];
-    } elseif ($m > 40) {
+    } elseif ($m >= 41) {
         return [
             'g' => 'C',
             'r' => 'Result is below to average. Do hard work to improve it.',
             'c' => 'warning',
         ];
-    } elseif ($m > 30) {
+    } elseif ($m >= 33) {
         return [
             'g' => 'D',
             'r' => 'Result is poor. Need much hard work to improve it.',
@@ -146,439 +148,573 @@ function res($m)
         ];
     }
 }
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        crossorigin="anonymous" />
-    <title>AMA Student Marksheet</title>
+    <title>Marksheet : Anshu Memorial Academy</title>
+    {{-- <link rel="stylesheet" href="paper2.css" /> --}}
+    <link href="{{ asset('css/paper2.css') }}" rel="stylesheet">
+    {{-- <script src="./tailwindcss-dev-3.4.3.js"></script> --}}
+    <script src="{{ asset('js/tailwindcss-dev-3.4.3.js') }}"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" />
     <style>
-        @media screen,
-        print {
-            * {
-                -webkit-print-color-adjust: exact !important;
-                /*Chrome, Safari */
-                color-adjust: exact !important;
-                /*Firefox*/
-            }
-        }
-
         * {
-            margin-bottom: 0;
-            padding: 0;
-            box-sizing: border-box;
+            font-family: Nunito, Roboto, Helvetica, Georgia, Arial, sans-serif,
+                Comic Sans MS, Calibri;
+        }
+    </style>
+    <style>
+        @page {
+            size: A4;
+        }
+    </style>
+    <style>
+        .main-content {
+            /* background: url("./ama-128x128-0.15.webp") center/60px 60px round; */
+            background: url("{{ asset('images/static/ama-128x128-0.15.webp') }}") center/60px 60px round;
         }
 
-        .marksheet {
-            display: table;
-            /* width: 743px;
-        height: 510px; */
-            width: 720px;
-            height: 500px;
-
-            /* margin-bottom: 10px; */
-            background: linear-gradient(rgba(250, 250, 250, 0.85),
-                    rgba(255, 255, 255, 0.85)),
-                url("https://v1.anshumemorial.in/assets/static/img/ama/ama-128x128.png") center/60px 60px round;
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-        }
-
-        .marksheet>table {
-            width: 720px;
-            /* height: 1000px; */
-            border: thin solid;
-        }
-
-        .page-break {
-            page-break-after: always;
-            margin: 0px 0px 0px 0px;
-            padding: 0px 0px 0px 0px;
-            /* border-bottom: thin solid; */
-        }
-
-        .draw-line {
-            width: 100%;
-            border-bottom: thin solid;
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-
-        td table th {
-            padding-left: 25px;
-            padding-right: 25px;
-        }
-
-        td table td {
-            padding-left: 5px;
-            padding-right: 5px;
-        }
-
-        .nowrap {
-            white-space: nowrap;
-        }
-
-        .marks td {
-            text-align: center;
-        }
-
-        /* .marks td,
-      .marks th {
-        border: thin solid;
-        padding-top: 2.5px;
-        padding-bottom: 2.5px;
+        /* tbody tr th:first-child {
+        text-align: left;
       } */
-        table a {
-            text-decoration: none;
-        }
-
-        .text-purple {
-            color: var(--bs-purple);
-        }
-
-        .text-indigo {
-            color: var(--bs-indigo);
-        }
     </style>
 </head>
 
-<body>
+<body class="A4">
+    {{-- @foreach ($results as $result) --}}
+    @php
+        $qrData = '';
+        $qrData = "Name: {$result->admitCard->name},\n";
+        $qrData .= "Father's Name: {$result->admitCard->father},\n";
+        $qrData .= "Mother: {$result->admitCard->mother},\n";
+        $qrData .= "Session: {$result->session},\n";
+        $qrData .= "Class: {$result->admitCard->class}, Roll: {$result->admitCard->roll},\n";
+        $qrData .= "Obtained Marks: {$result->total}/{$result->full_marks},\n";
+        $qrData .= "Position in class: {$result->position}\n";
+        $qrData .= "\n";
+        $qrData .= "Marks:\n";
+        // $qrData .= 'Science: ' . $result->marks->science . "\n";
 
+        foreach ($result->marks as $subject => $mark) {
+            $qrData .= "$subject: $mark\n"; // Use double quotes and variable interpolation
+        }
 
-    <!-- marksheet main div -->
-    <table class="pt-3">
-        <tr>
-            <td>&nbsp;</td>
-        </tr>
-    </table>
-    <div class="marksheet mx-auto mt-2">
-        <!-- marksheet table form -->
-        <table>
-            <tbody>
-                <!-- header part -->
-                <tr>
-                    <td>
-                        <!-- estd. and registration number section -->
-                        <div class="d-flex justify-content-between pt-2">
-                            <p class="ps-4 mb-0"><strong>Estd. : 2017</strong></p>
-                            <p class="pe-4 mb-0"><strong>Reg. No. 281184/18</strong></p>
+    @endphp
+    <!-- page -->
+    <section class="sheet p-4 flex flex-col">
+        <!-- main content -->
+        <div class="main-content border-2 border-black h-full flex flex-col">
+            <!-- header details -->
+            <div class="flex justify-between px-2">
+                <div class="font-semibold">Estd. : 2017</div>
+                <div class="flex-grow font-semibold text-center">
+                    AN ISO 9001:2015 CERTIFIED SCHOOL
+                </div>
+                <div class="font-semibold">Reg. No. 054631</div>
+            </div>
+            <!-- header name -->
+            <div class="flex justify-between px-2 py-2">
+                <div>
+                    {{-- <img width="84" src="./ama300.webp" alt="logo" /> --}}
+                    <img width="84" src="{{ asset('images/static/ama300.webp') }}" alt="logo" />
+                </div>
+                <div class="flex-grow flex flex-col text-center">
+                    <div class="font-semibold text-4xl font-[roboto,helvetica]">
+                        Anshu Memorial Academy
+                    </div>
+                    <div class="font-semibold">
+                        Bhatha Chowk, Bhatha Dasi, Rajapakar, Vaishali
+                    </div>
+                    <div class="text-sm">
+                        Run & Managed by AnitaBindeshwar Foundation (Regd. under Company
+                        Act 2013)
+                    </div>
+                </div>
+                <div>
+                    {{-- <img width="84" src="./bbbp300.webp" alt="beti bachao beti padhao" /> --}}
+                    <img width="84" src="{{ asset('images/static/bbbp300.webp') }}" alt="beti bachao beti padhao" />
+                </div>
+            </div>
+            <!-- padding -->
+            <div class="p-0">
+                <!-- result type -->
+                <div>
+                    <div class="w-full text-center border-t-2 border-black">
+                        <div>REPORT CARD [ANNUAL EXAMINATION]</div>
+                        <div>SESSION 2023-2024</div>
+                    </div>
+                </div>
+                <!-- student details -->
+                <div>
+                    <div class="w-full border-t-2 border-black py-2 px-4">
+                        <div class="flex gap-x-2">
+                            <div class="flex-grow">
+                                <table class="w-full text-left">
+                                    <tr>
+                                        <th class="px-3 py-2 whitespace-nowrap">Name</th>
+                                        <td class="px-3 py-2 whitespace-nowrap">:</td>
+                                        <td class="px-3 py-2 whitespace-nowrap">
+                                            {{ $result->admitCard->name }}</td>
+                                        <th class="px-3 py-2 whitespace-nowrap">Class</th>
+                                        <td class="px-3 py-2 whitespace-nowrap">:</td>
+                                        <td class="px-3 py-2 whitespace-nowrap">{{ $result->admitCard->class }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="px-3 py-2 whitespace-nowrap">Mother's Name</th>
+                                        <td class="px-3 py-2 whitespace-nowrap">:</td>
+                                        <td class="px-3 py-2 whitespace-nowrap">{{ $result->admitCard->mother }}
+                                        </td>
+                                        <th class="px-3 py-2 whitespace-nowrap">Roll No.</th>
+                                        <td class="px-3 py-2 whitespace-nowrap">:</td>
+                                        <td class="px-3 py-2 whitespace-nowrap">{{ $result->admitCard->roll }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="px-3 py-2 whitespace-nowrap">Father's Name</th>
+                                        <td class="px-3 py-2 whitespace-nowrap">:</td>
+                                        <td class="px-3 py-2 whitespace-nowrap">{{ $result->admitCard->father }}
+                                        </td>
+                                        <th class="px-3 py-2 whitespace-nowrap">Section</th>
+                                        <td class="px-3 py-2 whitespace-nowrap">:</td>
+                                        <td class="px-3 py-2 whitespace-nowrap">A</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="px-3 py-2 whitespace-nowrap">Date of Birth</th>
+                                        <td class="px-3 py-2 whitespace-nowrap">:</td>
+                                        <td class="px-3 py-2 whitespace-nowrap">
+                                            {{ date('d-m-Y', strtotime($result->admitCard->dob)) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="px-3 py-2 whitespace-nowrap">Address</th>
+                                        <td class="px-3 py-2 whitespace-nowrap">:</td>
+                                        <td class="px-3 py-2 whitespace-nowrap" colspan="4">
+                                            {{ $result->admitCard->address }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <!-- student picture -->
+                            <div>
+                                <div class="border-2 border-black w-[150px] h-[180px]">
+                                    <!-- <div class="border border-black aspect-[20/23]"> -->
+                                    {{-- <img src="./person.jpg" class="w-full h-full aspect-[4/3]" alt="student image" /> --}}
+                                    <img src="{{ $result->admitCard->image ? asset('uploads/images/students/' . $result->admitCard->image) : asset('images/static/paste-image.webp') }}"
+                                        class="w-full h-full aspect-[4/3]" alt="student image" />
+                                </div>
+                            </div>
+                            <!-- /student picture -->
                         </div>
-                        <!-- school details table -->
-                        <table class="mx-auto" style="width: 100%">
-                            <tr>
-                                <!-- school logo part left side -->
-                                <td class="pt-2" style="width: 15%">
-                                    <img class="float-end" width="75px" height="75px"
-                                        src="https://v1.anshumemorial.in/assets/static/img/ama/ama-128x128.png"
-                                        alt="" srcset="" />
-                                </td>
-                                <!-- school name, address and other details -->
-                                <td style="width: 70%">
-                                    <table style="width: 100%">
-                                        <!-- school name -->
-                                        <tr>
-                                            <td>
-                                                <h1 class="text-center">Anshu Memorial Academy</h1>
-                                            </td>
-                                        </tr>
-                                        <!-- school address -->
-                                        <tr>
-                                            <td>
-                                                <p class="h6 text-center">
-                                                    <a class="text-dark"
-                                                        href="https://maps.app.goo.gl/25zkJr8u8qVxau1G9"
-                                                        target="_blank">Bhatha Chowk, Bhatha Dasi, Rajapakar,
-                                                        Vaishali</a>
-                                                </p>
-                                            </td>
-                                        </tr>
-                                        <!-- school other details -->
-                                        <tr>
-                                            <td>
-                                                <p class="h6 text-center">Run & Managed by AnitaBindeshwar Foundation
-                                                </p>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <!--// school name, address and other details -->
-                                <!-- beti bachao beti padhao right side logo -->
-                                <td style="width: 15%">
-                                    <img class="float-start" width="75px" height="75px"
-                                        src="https://v1.anshumemorial.in/assets/static/img/bbbp512.png" alt=""
-                                        srcset="" />
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <!-- // header part -->
-                <!-- draw-line -->
-                <tr>
-                    <td>
-                        <div class="draw-line"></div>
-                    </td>
-                </tr>
-                <!-- report card details -->
-                <tr>
-                    <td>
-                        <table class="mx-auto" style="width: 100%">
-                            <tr>
-                                <td>
-                                    <h6 class="text-center">
-                                        REPORT CARD [ANNUAL EXAMINATION]
-                                    </h6>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h6 class="text-center">ACADEMIC SESSION : 2021-22</h6>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <table class="table mx-auto border-0" style="width: 100%">
-                            <!-- student details row -->
-                            <tr>
-                                <!-- student personal details -->
-                                <td class="" style="width: 75%">
-                                    <table class="table" style="width: 100%">
-                                        <tr>
-                                            <th>Name</th>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ $stu->name }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Father's Name</th>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ $stu->father }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Mother's Name</th>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ $stu->mother }}</td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Date of Birth</th>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ date('d-m-Y', strtotime($stu->dob)) }}</td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <th>Address</th>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ $stu->address }}</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <!-- // student details row -->
-                                <td></td>
-                                <!-- student school details -->
-                                <td style="width: 20%">
-                                    <table style="width: 100%" class="table">
-                                        <tr>
-                                            <th>Class</th>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ $stu->class }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Roll</th>
-                                            <td><strong>:</strong></td>
-                                            <td>{{ $stu->roll }}</td>
-                                        </tr>
-                                        <tr class="bg-{{ res(($result->total * 100) / $result->full_marks)['c'] }}">
-                                            <th>Grade</th>
-                                            <td><strong>:</strong></td>
-                                            <td class="fw-bold">{{ res(($result->total * 100) / $result->full_marks)['g'] }}
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <!-- // student school details -->
-                                <td></td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-                <!-- student subject marks and grade -->
-
-                <tr>
-                    <td>
-                        <table class="table table-striped mx-auto marks" style="width: 80%">
-                            <!-- marks table heder part -->
+                    </div>
+                </div>
+                <!-- marks -->
+                <div class="w-full border-y-2 py-2 border-black px-4">
+                    <div class="flex gap-5">
+                        <table class="w-full table text-center">
                             <thead>
-                                <tr>
-                                    <th scope="col" class="">Subject</th>
-                                    <th scope="col" class=" text-center">Full Marks</th>
-                                    <th scope="col" class=" text-center">Obtained Marks</th>
-                                    <th scope="col" class=" text-center">Marks %</th>
-                                    <th scope="col" class=" text-center">Grade</th>
+                                <tr class="border-b-2 border-black">
+                                    <th class="px-3 py-2 whitespace-nowrap text-left">Subjects</th>
+                                    <th class="px-3 py-2 whitespace-nowrap">Full Marks</th>
+                                    <th class="px-3 py-2 whitespace-nowrap">Written</th>
+                                    <th class="px-3 py-2 whitespace-nowrap">Oral</th>
+                                    <th class="px-3 py-2 whitespace-nowrap">Total</th>
+                                    <th class="px-3 py-2 whitespace-nowrap">Grade</th>
                                 </tr>
                             </thead>
+                            <tbody>
 
-                            <tr>
-                                <th scope="row">English</th>
-                                <td>100</td>
-                                <td>{{ $result->english }}</td>
-                                <td>{{ res($result->english)['g'] }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Hindi</th>
-                                <td>100</td>
-                                <td>{{ $result->hindi }}</td>
-                                <td>{{ res($result->hindi)['g'] }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Math</th>
-                                <td>100</td>
-                                <td>{{ $result->math }}</td>
-                                <td>{{ res($result->math)['g'] }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Drawing</th>
-                                <td>100</td>
-                                <td>{{ $result->drawing }}</td>
-                                <td>{{ res($result->drawing)['g'] }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Total</th>
-                                <th class="text-center">{{ $result->full_marks }}</th>
-                                <th class="text-center">{{ $result->total }}</th>
-                                <th class="text-center">{{ res($result->total / 4)['g'] }}</th>
-                            </tr>
+                                <tr class="border-b-[1px] border-gray-300">
+                                    <th class="px-3 py-2 whitespace-nowrap text-left">Hindi</th>
+                                    <td class="px-3 py-2 whitespace-nowrap">100</td>
+                                    <td class="px-3 py-2 whitespace-nowrap">{{ $result->marks->hindi }}</td>
+                                    <td class="px-3 py-2 whitespace-nowrap">--</td>
+                                    <td class="px-3 py-2 whitespace-nowrap">{{ $result->marks->hindi }}</td>
+                                    <td class="px-3 py-2 whitespace-nowrap">{{ res($result->marks->hindi)['g'] }}
+                                    </td>
+                                </tr>
+
+                                <tr class="border-b-[1px] border-gray-300">
+                                    <th class="px-3 py-2 whitespace-nowrap text-left">English</th>
+                                    <td class="px-3 py-2 whitespace-nowrap">100</td>
+                                    <td class="px-3 py-2 whitespace-nowrap">{{ $result->marks->english }}</td>
+                                    <td class="px-3 py-2 whitespace-nowrap">--</td>
+                                    <td class="px-3 py-2 whitespace-nowrap">{{ $result->marks->english }}</td>
+                                    <td class="px-3 py-2 whitespace-nowrap">{{ res($result->marks->english)['g'] }}
+                                    </td>
+                                </tr>
+
+                                <tr class="border-b-[1px] border-gray-300">
+                                    <th class="px-3 py-2 whitespace-nowrap text-left">Maths</th>
+                                    <td class="px-3 py-2 whitespace-nowrap">100</td>
+                                    <td class="px-3 py-2 whitespace-nowrap">{{ $result->marks->maths }}</td>
+                                    <td class="px-3 py-2 whitespace-nowrap">--</td>
+                                    <td class="px-3 py-2 whitespace-nowrap">{{ $result->marks->maths }}</td>
+                                    <td class="px-3 py-2 whitespace-nowrap">{{ res($result->marks->maths)['g'] }}
+                                    </td>
+                                </tr>
+
+                                <tr class="border-b-[1px] border-gray-300">
+                                    <th class="px-3 py-2 whitespace-nowrap text-left">Science</th>
+                                    <td class="px-3 py-2 whitespace-nowrap">
+                                        @if (!in_array($result->admitCard->class, $classes))
+                                            100
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
+                                    <td class="px-3 py-2 whitespace-nowrap">
+                                        {{ isset($result->marks->science) ? $result->marks->science : '--' }}
+                                    </td>
+                                    <td class="px-3 py-2 whitespace-nowrap">
+                                        {{ isset($result->marks->science_oral) ? $result->marks->science_oral : '--' }}
+                                    </td>
+                                    </td>
+                                    <td class="px-3 py-2 whitespace-nowrap">
+                                        {{-- {{ isset($result->marks->scince_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science }} --}}
+                                        @if (!in_array($result->admitCard->class, $classes))
+                                            {{ isset($result->marks->science_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science }}
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
+                                    </td>
+                                    <td class="px-3 py-2 whitespace-nowrap">
+                                        @if (!in_array($result->admitCard->class, $classes))
+                                            {{ res(isset($result->marks->science_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science)['g'] }}
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
+                                </tr>
+
+                                <tr class="border-b-[1px] border-gray-300">
+                                    <th class="px-3 py-2 whitespace-nowrap text-left">Social Science</th>
+                                    <td class="px-3 py-2 whitespace-nowrap">
+                                        @if (!in_array($result->admitCard->class, $classes))
+                                            100
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
+                                    <td class="px-3 py-2 whitespace-nowrap">
+                                        {{ isset($result->marks->sst) ? $result->marks->sst : '--' }}</td>
+                                    <td class="px-3 py-2 whitespace-nowrap">
+                                        {{ isset($result->marks->scince_oral) ? $result->marks->scince_oral : '--' }}
+                                    </td>
+                                    </td>
+                                    <td class="px-3 py-2 whitespace-nowrap">
+
+                                        @if (!in_array($result->admitCard->class, $classes))
+                                            {{ isset($result->marks->scince_oral) ? $result->marks->sst + $result->marks->sst_oral : $result->marks->sst }}
+                                            {{-- {{ res(isset($result->marks->scince_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science)['g'] }} --}}
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
+                                    </td>
+                                    <td class="px-3 py-2 whitespace-nowrap">
+                                        @if (!in_array($result->admitCard->class, $classes))
+                                            {{-- {{ res(isset($result->marks->scince_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science)['g'] }} --}}
+                                            {{ res(isset($result->marks->scince_oral) ? $result->marks->sst + $result->marks->sst_oral : $result->marks->sst)['g'] }}
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
+                                </tr>
+
+                                <tr class="border-b-[1px] border-gray-300">
+                                    <th class="px-3 py-2 whitespace-nowrap text-left">Computer</th>
+                                    <td class="px-3 py-2 whitespace-nowrap">
+                                        @if (!in_array($result->admitCard->class, $classes))
+                                            100
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
+                                    <td class="px-3 py-2 whitespace-nowrap">
+                                        @if (!in_array($result->admitCard->class, $classes))
+                                            {{ $result->marks->computer }}
+                                            {{-- {{ res(isset($result->marks->scince_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science)['g'] }} --}}
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
+                                    <td class="px-3 py-2 whitespace-nowrap">--</td>
+                                    <td class="px-3 py-2 whitespace-nowrap">
+                                        @if (!in_array($result->admitCard->class, $classes))
+                                            {{ $result->marks->computer }}
+                                            {{-- {{ res(isset($result->marks->scince_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science)['g'] }} --}}
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
+                                    <td class="px-3 py-2 whitespace-nowrap">
+                                        @if (!in_array($result->admitCard->class, $classes))
+                                            {{-- {{ res(isset($result->marks->scince_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science)['g'] }} --}}
+                                            {{ res($result->marks->computer)['g'] }}
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
+                                </tr>
+
+                                <tr class="border-b-[1px] border-gray-300">
+                                    <th class="px-3 py-2 whitespace-nowrap text-left">General Knowledge</th>
+                                    <td class="px-3 py-2 whitespace-nowrap">
+                                        @if (!in_array($result->admitCard->class, $classes))
+                                            100
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
+                                    <td class="px-3 py-2 whitespace-nowrap">
+                                        @if (!in_array($result->admitCard->class, $classes))
+                                            {{ $result->marks->gk }}
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
+                                    <td class="px-3 py-2 whitespace-nowrap">--</td>
+                                    <td class="px-3 py-2 whitespace-nowrap">
+                                        @if (!in_array($result->admitCard->class, $classes))
+                                            {{ $result->marks->gk }}
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
+                                    <td class="px-3 py-2 whitespace-nowrap">
+                                        @if (!in_array($result->admitCard->class, $classes))
+                                            {{ res($result->marks->gk)['g'] }}
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
 
                         </table>
-                        <p class="px-5"><strong>Marks in word : </strong>{{ ucwords(numToText($result->total)) }}</p>
-                        <div class="d-flex justify-content-center">
-                            <p style="font-size: 11px;" class="bg-light border-bottom d-inline-block border-secondary">
-                                <strong>Grading Scale :</strong> A+(91%-100%), A(81%-90%), B+(71%-80%), B(61%-70%),
-                                C+(51%-60%),
-                                C(41%-50%), D(31%-40%), E(30% & Below)
-                            </p>
+                        <div class="w-[200px]">
+                            <div class="w-full aspect-square border border-black">
+                                {{-- <img src="./sample-qr-code.png" alt="" /> --}}
+                                {!! QrCode::size(150, 150)->margin(2)->generate($qrData) !!}
+                            </div>
+                            <div>
+                                <table class="border border-black mt-2 text-xs  w-full text-left">
+                                    <tr>
+                                        <th class="border border-black px-1 text-center" colspan="2">Grading
+                                            System</th>
+                                        {{-- <th class="border border-black px-1">Range</th> --}}
+                                    </tr>
+                                    <tr>
+                                        <th class="border border-black px-1">A+</th>
+                                        <td class="border border-black px-1">91%-100%</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border border-black px-1">A</th>
+                                        <td class="border border-black px-1">81%-90%</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border border-black px-1">B+</th>
+                                        <td class="border border-black px-1">71%-80%</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border border-black px-1">B</th>
+                                        <td class="border border-black px-1">61%-70%</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border border-black px-1">C+</th>
+                                        <td class="border border-black px-1">51%-60%</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border border-black px-1">C</th>
+                                        <td class="border border-black px-1">41%-50%</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border border-black px-1">D</th>
+                                        <td class="border border-black px-1">33%-50%</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border border-black px-1">E</th>
+                                        <td class="border border-black px-1">Less than 33%</td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
-                    </td>
-                </tr>
-                <!-- draw-line -->
-                <!-- <tr>
-            <td>
-              <div class="draw-line"></div>
-            </td>
-          </tr> -->
-                <!-- draw-line -->
-                <tr>
-                    <td>
-                        <div class="draw-line"></div>
-                    </td>
-                </tr>
-                <!-- // student subject marks and grade -->
-                <tr>
-                    <td>
-                        <table class="mx-auto" style="width: 100%">
-                            <tr>
-                                <td class="px-5"><strong>Remarks :</strong> {{ res($result->total / 4)['r'] }}</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <!-- draw-line -->
-                <tr>
-                    <td>
-                        <div class="draw-line"></div>
-                    </td>
-                </tr>
+                    </div>
+                </div>
 
-                <!-- Date, signature of class teacher and principal -->
-                <tr>
-                    <td style="width: 100%">
-                        <table class="text-center h6 mt-2 pt-5" style="width: 100%">
-                            <tr>
-                                <td style="width: 33.3%">
-                                    <table class="mx-auto mt-4">
-                                        <tr>
-                                            <td>{{ date('d-m-Y') }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Date</th>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td style="width: 33.3%">
-                                    <table class="mx-auto">
-                                        <tr>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Class Teacher</th>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td style="width: 33.3%">
-                                    <table class="mx-auto">
-                                        <tr>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Principal</th>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <!-- draw-line -->
+                <div class="px-4 py-2">
+                    <table class="border border-black w-full text-center">
+                        <tr>
+                            <th class="border border-black px-3 py-2">Obtained Marks</th>
+                            <th class="border border-black px-3 py-2">Obtained Marks %</th>
+                            <th class="border border-black px-3 py-2">Attendance</th>
+                            <th class="border border-black px-3 py-2">Grade</th>
+                            <th class="border border-black px-3 py-2">Position in Class</th>
+                        </tr>
 
-                <tr>
-                    <td class="pt-3">
-                        <table>
-                            <tr>
-                                <td class="bg-success text-light vw-100">
-                                    <div class="d-flex justify-content-around">
-                                        <a class="text-light" href="tel:9128289100">9128289100</a>
-                                        <a class="text-light" href="tel:9709582920">9709582920</a>
+                        <tr>
+                            <td class="border border-black px-3 py-2">
+                                {{ $result->total }}/{{ $result->full_marks }}</td>
+                            <td class="border border-black px-3 py-2">
+                                {{ round(($result->total * 100) / $result->full_marks, 2) }}%
+                            </td>
+                            <td class="border border-black px-3 py-2">--</td>
+                            <td class="border border-black px-3 py-2">
+                                {{ res(($result->total * 100) / $result->full_marks)['g'] }}
+                            </td>
+                            <td class="border border-black px-3 py-2">
+                                {{-- {{ isset($result->position) ? $result->position : '--' }} --}}
+                                @isset($result->position)
+                                    {{ $result->position }}
+                                @endisset
+                                @empty($result->position)
+                                    --
+                                @endempty
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
-                                        <a class="text-light"
-                                            href="mailto:anshumemorial@gmail.com">anshumemorial@gmail.com</a>
+                <div>
+                    <div class="px-4 ">
+                        <span class="font-semibold"> Remarks : </span>
+                        <span> {{ res(($result->total * 100) / $result->full_marks)['r'] }} </span>
+                    </div>
+                </div>
+            </div>
 
-                                        <a class="text-light" href="http://anshumemorial.in"
-                                            target="_blank">www.anshumemorial.in</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <p class="text-center text-muted">
-        Designed & Developed by
-        <a href="http://twitter.com/AnshuMemorial" target="_blank">Anshu Memorial Academy</a>
-        (IT Team).
-    </p>
+            <!-- fill empty space -->
+            <div class="w-full flex-grow"></div>
 
-    <div class="page-break"></div>
+            <!-- signature section -->
+            <div class="flex">
+                <div class="w-full flex justify-around p-2 items-end">
+                    <div class="font-semibold px-5">
+                        <div class="flex flex-col text-center">
+                            <div>{{ date('d-m-Y') }}</div>
+                            <div class="border-t-2 border-dashed border-black">Date</div>
+                        </div>
+                    </div>
+                    <div class="font-semibold px-5">
+                        <div class="flex flex-col text-center">
+                            <div>
+                                @auth
+                                    @if ($result->admitCard->class === 'LKG')
+                                        <img src="{{ asset('images/static/sanjana-sign.webp') }}">
+                                    @endif
+                                    @if ($result->admitCard->class === 'UKG')
+                                        <img src="{{ asset('images/static/pooja-sign.webp') }}">
+                                    @endif
+                                    @if ($result->admitCard->class === 'Play')
+                                        <img src="{{ asset('images/static/mukesh-sign.webp') }}">
+                                    @endif
+                                    @if (!in_array($result->admitCard->class, ['Play', 'LKG', 'UKG']))
+                                        <img src="{{ asset('images/static/mukul-sign.webp') }}">
+                                    @endif
+                                @endauth
+                            </div>
+                            <div class="border-t-2 border-dashed border-black">Class Teacher</div>
+                        </div>
+                    </div>
+                    <div class="font-semibold px-5">
+                        <div class="flex flex-col text-center">
+                            <div class="w-48">
+                                @auth
+                                    <img src="{{ asset('images/static/principal_seal400.webp') }}">
+                                @endauth
+                            </div>
+                            <div class="border-t-2 border-dashed border-black"> Director/Principal</div>
+                        </div>
+                    </div>
 
+                </div>
+                <div class="bg-red-100 aspect-square w-[200px]" hidden></div>
+            </div>
+            <!-- footer -->
+            <div>
+                <div class="bg-green-700 text-white px-1 py-[1px] flex justify-between border-t-2 border-black">
+                    <!-- call -->
+                    <div class="flex">
+                        <svg class="size-6 text-white m-auto mr-1" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                            viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M18.427 14.768 17.2 13.542a1.733 1.733 0 0 0-2.45 0l-.613.613a1.732 1.732 0 0 1-2.45 0l-1.838-1.84a1.735 1.735 0 0 1 0-2.452l.612-.613a1.735 1.735 0 0 0 0-2.452L9.237 5.572a1.6 1.6 0 0 0-2.45 0c-3.223 3.2-1.702 6.896 1.519 10.117 3.22 3.221 6.914 4.745 10.12 1.535a1.601 1.601 0 0 0 0-2.456Z" />
+                        </svg>
 
-    <script>
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl)
-        });
-    </script>
+                        <a class="my-auto" href="tel:+919128289100"> 9128289100</a>
+                    </div>
+                    <!-- /call -->
+                    <!-- whatsapp -->
+                    <div class="flex">
+                        <svg class="size-5 text-white my-auto mr-1" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                            viewBox="0 0 24 24">
+                            <path fill="currentColor" fill-rule="evenodd"
+                                d="M12 4a8 8 0 0 0-6.895 12.06l.569.718-.697 2.359 2.32-.648.379.243A8 8 0 1 0 12 4ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.96 9.96 0 0 1-5.016-1.347l-4.948 1.382 1.426-4.829-.006-.007-.033-.055A9.958 9.958 0 0 1 2 12Z"
+                                clip-rule="evenodd" />
+                            <path fill="currentColor"
+                                d="M16.735 13.492c-.038-.018-1.497-.736-1.756-.83a1.008 1.008 0 0 0-.34-.075c-.196 0-.362.098-.49.291-.146.217-.587.732-.723.886-.018.02-.042.045-.057.045-.013 0-.239-.093-.307-.123-1.564-.68-2.751-2.313-2.914-2.589-.023-.04-.024-.057-.024-.057.005-.021.058-.074.085-.101.08-.079.166-.182.249-.283l.117-.14c.121-.14.175-.25.237-.375l.033-.066a.68.68 0 0 0-.02-.64c-.034-.069-.65-1.555-.715-1.711-.158-.377-.366-.552-.655-.552-.027 0 0 0-.112.005-.137.005-.883.104-1.213.311-.35.22-.94.924-.94 2.16 0 1.112.705 2.162 1.008 2.561l.041.06c1.161 1.695 2.608 2.951 4.074 3.537 1.412.564 2.081.63 2.461.63.16 0 .288-.013.4-.024l.072-.007c.488-.043 1.56-.599 1.804-1.276.192-.534.243-1.117.115-1.329-.088-.144-.239-.216-.43-.308Z" />
+                        </svg>
+                        <a href="https://wa.me/919973757920?text=Hi%20I%20need%20help" class="my-auto">
+                            9973757920</a>
+                    </div>
+                    <!-- /whatsapp -->
+                    <!-- email -->
+                    <div class="flex">
+                        <span class="flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-5 my-auto mr-1">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                            </svg>
+                            <a href="mailto:anshumemorial@gmail.com">anshumemorial@gmail.com</a>
+                        </span>
+                    </div>
+                    <!-- /email -->
+                    <!-- web -->
+                    <div class="flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"
+                            class="size-5 fill-white my-auto mr-1">
+                            <path
+                                d="M336.5 160C322 70.7 287.8 8 248 8s-74 62.7-88.5 152h177zM152 256c0 22.2 1.2 43.5 3.3 64h185.3c2.1-20.5 3.3-41.8 3.3-64s-1.2-43.5-3.3-64H155.3c-2.1 20.5-3.3 41.8-3.3 64zm324.7-96c-28.6-67.9-86.5-120.4-158-141.6 24.4 33.8 41.2 84.7 50 141.6h108zM177.2 18.4C105.8 39.6 47.8 92.1 19.3 160h108c8.7-56.9 25.5-107.8 49.9-141.6zM487.4 192H372.7c2.1 21 3.3 42.5 3.3 64s-1.2 43-3.3 64h114.6c5.5-20.5 8.6-41.8 8.6-64s-3.1-43.5-8.5-64zM120 256c0-21.5 1.2-43 3.3-64H8.6C3.2 212.5 0 233.8 0 256s3.2 43.5 8.6 64h114.6c-2-21-3.2-42.5-3.2-64zm39.5 96c14.5 89.3 48.7 152 88.5 152s74-62.7 88.5-152h-177zm159.3 141.6c71.4-21.2 129.4-73.7 158-141.6h-108c-8.8 56.9-25.6 107.8-50 141.6zM19.3 352c28.6 67.9 86.5 120.4 158 141.6-24.4-33.8-41.2-84.7-50-141.6h-108z" />
+                        </svg>
+                        <a href="http://anshumemorial.in">www.anshumemorial.in</a>
+                    </div>
+                    <!-- /web -->
+                </div>
+            </div>
+            <!-- /footer -->
+        </div>
+        <!-- /main content -->
+
+        <!-- developer details -->
+        <div class="w-full text-center text-xs py-1 bg-gray-100">
+            Designed &amp; Developed by
+            <a class="text-blue-600 font-semibold" href="https://skwebs.github.io">Anshu Memorial Academy (IT
+                Team)</a>
+        </div>
+        <!-- /developer details -->
+
+        <!--  -->
+    </section>
+    {{-- @endforeach --}}
 </body>
 
 </html>

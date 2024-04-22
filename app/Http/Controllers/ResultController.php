@@ -108,7 +108,7 @@ class ResultController extends Controller
         // dd($stu->get());
         $stu = AdmitCard::find($result->admit_card_id);
         $classes = $this->lower_classes;
-        return view('results.show', compact('result', 'stu', 'classes'));
+        return view('results.tw_result', compact('result', 'stu', 'classes'));
     }
 
     // public function show(Result $result)
@@ -235,21 +235,21 @@ class ResultController extends Controller
             return '<span class="text-danger">This class has no result.</span>';
         }
 
-        $r = Result::select('id', 'roll')->where(['class' => $req->stu_class])->orderBy('roll')->get();
+        $rolls = Result::select('id', 'roll')->where(['class' => $req->stu_class])->orderBy('roll')->get();
         $select = '<label for="select-roll">Roll No.</label>';
         $select .= '<select id="select-roll" class="form-select">';
         $select .= '<option value="" selected disabled >Select Roll No.</option>';
 
-        foreach ($r as $roll) {
+        foreach ($rolls as $roll) {
             $select .= '<option value="' . $roll->id . '" >' . $roll->roll . '</option>';
         }
         $select .= '</select>';
         return $select;
     }
 
-    public function show_result(Request $req)
+    public function show_result(Request $request)
     {
-        $result = Result::find($req->id);
+        $result = Result::find($request->id);
         $stu = AdmitCard::find($result->admit_card_id);
         $classes = $this->lower_classes;
         return view('results.student_result_page', compact('result', 'stu', 'classes'));
@@ -259,32 +259,11 @@ class ResultController extends Controller
         $result = Result::find($id);
         $stu = AdmitCard::find($result->admit_card_id);
         $classes = $this->lower_classes;
-        return view('results.student_result_page', compact('result', 'stu', 'classes'));
+        // return view('results.student_result_page', compact('result', 'stu', 'classes'));
+        return view('results.tw_result', compact('result', 'stu', 'classes'));
     }
 
-    /*public function set_stu_position(Request $req)
-    {
-	    $classes = ['Play', 'Nursery', 'LKG','UKG','Std.1','Std.2','Std.3','Std.4'];
-	    $res = new Result;
 
-	    foreach($classes as $c){
-		    echo '<hr>'.$c;
-		    $p=1;
-		    $result=$res->where(['class'=>$c])->orderByDesc('total')->get();
-		    $t= "<table><tr><th>Roll No.</th><th>Marks</th><th>Position</th>";
-		    foreach($result as $r){
-			    $t .= "<tr><td>{$r->roll}</td><td>{$r->total}</td><td>{$r->position}</td></tr>";
-			    if($req->query('set')=='pos'){
-				    $ru=Result::find($r->id);
-				    $ru->position = $p;
-				    $ru->update();
-				    $p++;
-			    }
-		    }
-		    $t .= "</tr></table>";
-		    echo $t;
-	    }
-    }*/
 
     public function set_stu_position(Request $request)
     {
@@ -303,25 +282,25 @@ class ResultController extends Controller
 		    }
 		    </style>";
         $table .= "<table>";
-        foreach ($classes as $c) {
-            $table .= "<tr><th colspan=\"6\"><h2>{$c}</h2></th></tr>";
+        foreach ($classes as $class) {
+            $table .= "<tr><th colspan=\"6\"><h2>{$class}.</h2></th></tr>";
             $position = 1;
-            $result = $result_instance->with('admitCard')->where(['class' => $c])->orderByDesc('total')->get();
+            $results = $result_instance->with('admitCard')->where(['class' => $class])->orderByDesc('total')->get();
             $table .= "<tr><th>Position</th>
 			    <th>Name</th>
 			    <th>Mother</th>
 			    <th>Father</th>
 			    <th>Roll No.</th><th>Marks</th>";
-            foreach ($result as $r) {
-                $table .= "<tr><td>{$r->position}</td>
-				    <td>{$r->admitCard->name}</td>
-				    <td>{$r->admitCard->mother}</td>
-				    <td>{$r->admitCard->father}</td>
-				    <td>{$r->roll}</td><td>{$r->total}</td></tr>";
+            foreach ($results as $result) {
+                $table .= "<tr><td>{$result->position}</td>
+				    <td>{$result->admitCard->name}</td>
+				    <td>{$result->admitCard->mother}</td>
+				    <td>{$result->admitCard->father}</td>
+				    <td>{$result->admitCard->roll}</td><td>{$result->total}</td></tr>";
                 if ($request->query('set') === 'position') {
-                    $ru = Result::find($r->id);
-                    $ru->position = $position;
-                    $ru->update();
+                    $resultUpdate = Result::find($result->id);
+                    $resultUpdate->position = $position;
+                    $resultUpdate->update();
                     $position++;
                 }
             }

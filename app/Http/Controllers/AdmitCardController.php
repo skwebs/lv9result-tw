@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdmitCard;
+use App\Models\Result;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 // use Image;
@@ -116,6 +117,7 @@ class AdmitCardController extends Controller
             'class'     => 'required',
             'roll'      => 'numeric|required',
         ]);
+        // dd($request->id);
 
         $request->mergeIfMissing(['updated_by' => auth()->user()->name]);
 
@@ -129,6 +131,16 @@ class AdmitCardController extends Controller
         }
 
         $admitCard->update($request->except(['_token', 'id']));
+        // $resultUpdate = Result::find(['admit_card_id' => $request->id]);
+
+        // Flight::where('active', 1)
+        // ->where('destination', 'San Diego')
+        // ->update(['delayed' => 1]);
+
+        Result::where('admit_card_id', $request->id)->update(
+            $request->only(['class', 'roll'])
+        );
+
 
         //return redirect()->route('admitCard.upload_image',$id);
         return redirect()->route('admitCard.index')->with('success', "{$request->name}, Class : \"{$request->class}\",  Roll No.: \"{$request->roll}\" has updated successfully.");
