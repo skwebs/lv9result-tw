@@ -199,6 +199,8 @@ function res($m)
         @php
             $qrData = '';
             $qrData = "Name: {$result->admitCard->name},\n";
+            $qrData .= "DoB : {$result->admitCard->dob},\n";
+            
             $qrData .= "Father's Name: {$result->admitCard->father},\n";
             $qrData .= "Mother: {$result->admitCard->mother},\n";
             $qrData .= "Session: {$result->session},\n";
@@ -381,7 +383,7 @@ function res($m)
                                         <td class="px-3 py-2 whitespace-nowrap">
                                             {{ isset($result->marks->science_oral) ? $result->marks->science_oral : '--' }}
                                         </td>
-                                        </td>
+                                        
                                         <td class="px-3 py-2 whitespace-nowrap">
                                             {{-- {{ isset($result->marks->scince_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science }} --}}
                                             @if (!in_array($result->admitCard->class, $classes))
@@ -390,7 +392,7 @@ function res($m)
                                                 --
                                             @endif
                                         </td>
-                                        </td>
+                                        
                                         <td class="px-3 py-2 whitespace-nowrap">
                                             @if (!in_array($result->admitCard->class, $classes))
                                                 {{ res(isset($result->marks->science_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science)['g'] }}
@@ -414,7 +416,7 @@ function res($m)
                                         <td class="px-3 py-2 whitespace-nowrap">
                                             {{ isset($result->marks->sst_oral) ? $result->marks->sst_oral : '--' }}
                                         </td>
-                                        </td>
+                                        
                                         <td class="px-3 py-2 whitespace-nowrap">
 
                                             @if (!in_array($result->admitCard->class, $classes))
@@ -423,7 +425,7 @@ function res($m)
                                                 --
                                             @endif
                                         </td>
-                                        </td>
+                                       
                                         <td class="px-3 py-2 whitespace-nowrap">
                                             @if (!in_array($result->admitCard->class, $classes))
                                                 {{-- {{ res(isset($result->marks->scince_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science)['g'] }} --}}

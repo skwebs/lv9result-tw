@@ -135,7 +135,7 @@
                                                         </svg>
                                                     </a>
                                                 </div>
-                                                <form class="d-none"
+                                                <form
                                                     action="{{ route('admitCard.destroy', $admitCard->id) }}"
                                                     method="POST">
                                                     @csrf

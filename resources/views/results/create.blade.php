@@ -104,7 +104,7 @@
 
 
                         <form class="row" method="POST"
-                            action="{{ route('result.store', ['class' => $stu->class, 'roll' => $stu->roll, 'session' => '2022-23', 'redirect_to' => url()->previous()]) }}"
+                            action="{{ route('result.store', ['class' => $stu->class, 'roll' => $stu->roll, 'session' => '2023-24', 'redirect_to' => url()->previous()]) }}"
                             enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="admit_card_id" value="{{ $stu->id }}">
@@ -159,7 +159,7 @@
 
                             {{-- for 1 and above class --}}
                             @if (!in_array($stu->class, $classes))
-                               {{-- Science --}}
+                                {{-- Science --}}
                                 <div class="mb-3 col-4 col-md-3">
                                     <label for="science"
                                         class="form-label">{{ __('Science') }}{!! $mandate !!}</label>
@@ -195,7 +195,7 @@
                                 </div>
 
 
-                               {{-- sst --}}
+                                {{-- sst --}}
                                 <div class="mb-3 col-4 col-md-3">
                                     <label for="sst"
                                         class="form-label">{{ __('S.St') }}{!! $mandate !!}</label>
@@ -262,7 +262,6 @@
                                         </span>
                                     @enderror
                                 </div>
-
                             @endif
 
 

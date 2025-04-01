@@ -199,6 +199,8 @@ function res($m)
     @php
         $qrData = '';
         $qrData = "Name: {$result->admitCard->name},\n";
+       
+        $qrData .= "DoB : {$result->admitCard->dob},\n";
         $qrData .= "Father's Name: {$result->admitCard->father},\n";
         $qrData .= "Mother: {$result->admitCard->mother},\n";
         $qrData .= "Session: {$result->session},\n";
@@ -389,7 +391,6 @@ function res($m)
                                             --
                                         @endif
                                     </td>
-                                    </td>
                                     <td class="px-3 py-2 whitespace-nowrap">
                                         @if (!in_array($result->admitCard->class, $classes))
                                             {{ res(isset($result->marks->science_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science)['g'] }}
@@ -411,23 +412,22 @@ function res($m)
                                     <td class="px-3 py-2 whitespace-nowrap">
                                         {{ isset($result->marks->sst) ? $result->marks->sst : '--' }}</td>
                                     <td class="px-3 py-2 whitespace-nowrap">
-                                        {{ isset($result->marks->scince_oral) ? $result->marks->scince_oral : '--' }}
+                                        {{ isset($result->marks->sst_oral) ? $result->marks->sst_oral : '--' }}
                                     </td>
-                                    </td>
+                                
                                     <td class="px-3 py-2 whitespace-nowrap">
 
                                         @if (!in_array($result->admitCard->class, $classes))
-                                            {{ isset($result->marks->scince_oral) ? $result->marks->sst + $result->marks->sst_oral : $result->marks->sst }}
+                                            {{ isset($result->marks->sst_oral) ? $result->marks->sst + $result->marks->sst_oral : $result->marks->sst }}
                                             {{-- {{ res(isset($result->marks->scince_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science)['g'] }} --}}
                                         @else
                                             --
                                         @endif
                                     </td>
-                                    </td>
                                     <td class="px-3 py-2 whitespace-nowrap">
                                         @if (!in_array($result->admitCard->class, $classes))
-                                            {{-- {{ res(isset($result->marks->scince_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science)['g'] }} --}}
-                                            {{ res(isset($result->marks->scince_oral) ? $result->marks->sst + $result->marks->sst_oral : $result->marks->sst)['g'] }}
+                                            {{-- {{ res(isset($result->marks->sst_oral) ? $result->marks->sst + $result->marks->sst_oral : $result->marks->sst)['g'] }} --}}
+                                            {{ res(isset($result->marks->sst_oral) ? $result->marks->sst + $result->marks->sst_oral : $result->marks->sst)['g'] }}
                                         @else
                                             --
                                         @endif
