@@ -31,9 +31,7 @@ Route::controller(AdmitCardController::class)->group(function () {
 	// });
 
 	Route::get('/student/upload-image/{admitCard}', 'upload_image')->name('admitCard.upload_image');
-
 	Route::post('/student/save-image/{admitCard}', 'save_image')->name('admitCard.save_image');
-
 	Route::get('/admitCard/all', 'admit_cards')->name('admitCard.admit_cards');
 });
 
