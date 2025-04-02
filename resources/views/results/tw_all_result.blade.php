@@ -419,7 +419,7 @@ function res($m)
                                             <td class="whitespace-nowrap px-3 py-2">
                                                 {{ $result->marks->sst ?? '--' }}</td>
                                             <td class="whitespace-nowrap px-3 py-2">
-                                                {{  $result->marks->sst_oral ?? '--' }}
+                                                {{ $result->marks->sst_oral ?? '--' }}
                                             </td>
 
                                             <td class="whitespace-nowrap px-3 py-2">
@@ -513,8 +513,10 @@ function res($m)
                                 </table>
                                 <div class="w-[200px]">
                                     <div class="aspect-square w-full border border-black">
-                                        {{-- <img src="./sample-qr-code.png" alt="" /> --}}
-                                        {!! QrCode::size(150, 150)->margin(2)->generate($qrData) !!}
+                                        {{-- {!! QrCode::size(150, 150)->margin(2)->generate($qrData) !!} --}}
+                                    <img src="data:image/png;base64, {!! base64_encode(
+                                        QrCode::size(1024, 1024)->margin(2)->format('png')->merge(public_path('/images/static/ama-old-128.png'), 0.3, true)->errorCorrection('H')->generate($qrData),
+                                    ) !!}" alt="QR Code">
                                     </div>
                                     <div>
                                         <table class="mt-2 w-full border border-black text-left text-xs">

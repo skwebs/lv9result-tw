@@ -22,14 +22,7 @@ Route::get('/', function () {
 	return view('home');
 });
 
-
-
 Route::controller(AdmitCardController::class)->group(function () {
-
-	// Route::get('/', function () {
-	// 	return redirect()->route('admitCard.index');
-	// });
-
 	Route::get('/student/upload-image/{admitCard}', 'upload_image')->name('admitCard.upload_image');
 	Route::post('/student/save-image/{admitCard}', 'save_image')->name('admitCard.save_image');
 	Route::get('/admitCard/all', 'admit_cards')->name('admitCard.admit_cards');
@@ -50,3 +43,5 @@ Route::resource('result', ResultController::class)->middleware('auth');
 Route::group(['middleware' => 'prevent-back-history'], function () {
 	Auth::routes();
 });
+
+Route::get('test', fn() => phpinfo());
