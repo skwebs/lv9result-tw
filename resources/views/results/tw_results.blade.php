@@ -258,7 +258,7 @@ function res($m)
                         <div>
                             <div class="text-semibold w-full border-t-2 border-black text-center">
                                 <div>REPORT CARD [ANNUAL EXAMINATION]</div>
-                                <div>SESSION 2024-2025</div>
+                                <div>SESSION {{ $result->session }}</div>
                             </div>
                         </div>
                         <!-- student details -->
@@ -290,7 +290,8 @@ function res($m)
                                             <tr>
                                                 <th class="whitespace-nowrap px-3 py-2">Father's Name</th>
                                                 <td class="whitespace-nowrap px-3 py-2">:</td>
-                                                <td class="whitespace-nowrap px-3 py-2">{{ $result->admitCard->father }}
+                                                <td class="whitespace-nowrap px-3 py-2">
+                                                    {{ $result->admitCard->father }}
                                                 </td>
                                                 <th class="whitespace-nowrap px-3 py-2">Section</th>
                                                 <td class="whitespace-nowrap px-3 py-2">:</td>

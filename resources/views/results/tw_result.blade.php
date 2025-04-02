@@ -258,7 +258,7 @@ function res($m)
                     <div>
                         <div class="w-full border-t-2 border-black text-center">
                             <div>REPORT CARD [ANNUAL EXAMINATION]</div>
-                            <div>SESSION 2024-2025</div>
+                            <div>SESSION {{ $result->session }}</div>
                         </div>
                     </div>
                     <!-- student details -->
