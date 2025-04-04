@@ -117,7 +117,7 @@
                                 <input id="maths" type="number"
                                     class="form-control @error('maths') is-invalid @enderror" onkeyup="totalMarks()"
                                     placeholder="Maths" min="0" max="100" name="maths"
-                                    value="{{ old('maths', $result->marks->maths) }}" required autofocus>
+                                    value="{{ old('maths', $result->marks->maths ?? '') }}" required autofocus>
 
                                 @error('maths')
                                     <span class="invalid-feedback" role="alert">
@@ -133,12 +133,12 @@
                                 <input id="hindi" type="number"
                                     class="form-control @error('hindi') is-invalid @enderror" name="hindi"
                                     onkeyup="totalMarks()" placeholder="Hindi" min="0" max="100"
-                                    value="{{ old('hindi', $result->marks->hindi) }}" autofocus required>
+                                    value="{{ old('hindi', $result->marks->hindi ?? '') }}" autofocus required>
 
                                 @error('hindi')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
-                                    </span>ewrup][25
+                                    </span>
                                 @enderror
                             </div>
                             <!-- //hindi -->
@@ -150,7 +150,7 @@
                                 <input id="english" type="number"
                                     class="form-control @error('english') is-invalid @enderror" name="english"
                                     onkeyup="totalMarks()" placeholder="English" min="0" max="100"
-                                    value="{{ old('english', $result->marks->english) }}" required autofocus>
+                                    value="{{ old('english', $result->marks->english ?? '') }}" required autofocus>
 
                                 @error('english')
                                     <span class="invalid-feedback" role="alert">
@@ -169,7 +169,8 @@
                                     <input id="science" type="number"
                                         class="form-control @error('science') is-invalid @enderror" onkeyup="totalMarks()"
                                         placeholder="Science" min="0" max="80"
-                                        value="{{ old('science', $result->marks->science) }}" name="science" required>
+                                        value="{{ old('science', $result->marks->science ?? '') }}" name="science"
+                                        required>
 
                                     @error('science')
                                         <span class="invalid-feedback" role="alert">
@@ -188,7 +189,7 @@
                                     <input id="science_oral" type="number"
                                         class="form-control @error('science_oral') is-invalid @enderror"
                                         onkeyup="totalMarks()" placeholder="Sc. Oral" min="0" max="20"
-                                        value="{{ old('science_oral', $result->marks->science_oral) }}"
+                                        value="{{ old('science_oral', $result->marks->science_oral ?? '') }}"
                                         name="science_oral" pattern="^[0-9]{2}$" required>
 
                                     @error('science_oral')
@@ -207,7 +208,7 @@
                                     <input id="sst" type="number"
                                         class="form-control @error('sst') is-invalid @enderror" onkeyup="totalMarks()"
                                         placeholder="S.St" min="0" max="80"
-                                        value="{{ old('sst', $result->marks->sst) }}" name="sst" required>
+                                        value="{{ old('sst', $result->marks->sst ?? '') }}" name="sst" required>
 
                                     @error('sst')
                                         <span class="invalid-feedback" role="alert">
@@ -224,7 +225,7 @@
                                     <input id="sst_oral" type="number"
                                         class="form-control @error('sst_oral') is-invalid @enderror"
                                         onkeyup="totalMarks()" placeholder="S.St. Oral" min="0" max="20"
-                                        value="{{ old('sst_oral', $result->marks->sst_oral) }}" name="sst_oral"
+                                        value="{{ old('sst_oral', $result->marks->sst_oral ?? '') }}" name="sst_oral"
                                         pattern="^[0-9]{2}$" required>
 
                                     @error('sst_oral')
@@ -243,7 +244,7 @@
                                     <input id="computer" type="number"
                                         class="form-control @error('computer') is-invalid @enderror" name="computer"
                                         onkeyup="totalMarks()" placeholder="Computer" min="0" max="100"
-                                        value="{{ old('computer', $result->marks->computer) }}" required
+                                        value="{{ old('computer', $result->marks->computer ?? '') }}" required
                                         autocomplete="computer">
 
                                     @error('computer')
@@ -262,7 +263,7 @@
                                     <input id="gk" type="number"
                                         class="form-control @error('gk') is-invalid @enderror" name="gk"
                                         onkeyup="totalMarks()" placeholder="GK" min="0" max="100"
-                                        value="{{ old('gk', $result->marks->gk) }}" required autocomplete="gk">
+                                        value="{{ old('gk', $result->marks->gk ?? '') }}" required autocomplete="gk">
 
                                     @error('gk')
                                         <span class="invalid-feedback" role="alert">
@@ -282,7 +283,8 @@
                                 <input id="drawing" type="number"
                                     class="form-control @error('drawing') is-invalid @enderror" onkeyup="totalMarks()"
                                     placeholder="Drawing" min="0" max="100" name="drawing"
-                                    value="{{ old('drawing', $result->marks->drawing) }}" autocomplete="bday" required>
+                                    value="{{ old('drawing', $result->marks->drawing ?? '') }}" autocomplete="bday"
+                                    required>
 
                                 @error('drawing')
                                     <span class="invalid-feedback" role="alert">
