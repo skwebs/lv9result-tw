@@ -9,10 +9,6 @@
 @endsection
 
 
-
-{{-- <p>Financial Year: {{ $financialYear }}</p> --}}
-
-
 @section('js')
     @if (!in_array($stu->class, $classes))
         <script type="text/javascript">
@@ -109,7 +105,7 @@
 
 
                         <form class="row" method="POST"
-                            action="{{ route('result.store', ['class' => $stu->class, 'roll' => $stu->roll, 'session' => $financialYear, 'redirect_to' => url()->previous()]) }}"
+                            action="{{ route('result.store', ['class' => $stu->class, 'roll' => $stu->roll, 'redirect_to' => url()->previous()]) }}"
                             enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="admit_card_id" value="{{ $stu->id }}">
