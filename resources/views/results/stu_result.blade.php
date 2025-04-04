@@ -15,9 +15,9 @@
         }
 
         /*body{
-                filter: blur(8px);
-                  -webkit-filter: blur(8px);
-                }*/
+                    filter: blur(8px);
+                      -webkit-filter: blur(8px);
+                    }*/
     </style>
 @endsection
 @section('meta')
@@ -62,7 +62,7 @@
         </div>
 
 
-        <div class="res p-4 row">
+        <div class="res row p-4">
             <div class="col mx-auto">
                 <div class="row gy-2">
                     <div class="col">
@@ -82,7 +82,7 @@
         <div id="ms"></div>
         <!-- loading -->
         <div class="loading">
-            <div class="pb-2 pt-3 px-3 rounded shadow bg-light">
+            <div class="bg-light rounded px-3 pb-2 pt-3 shadow">
                 <div class="spinner-border" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
@@ -130,28 +130,7 @@
                         '', 'fulscreen=yes,width=735,heigjt=1040');
                     w.document.close();
                     w.focus();
-                    //w.print();
 
-                    //on page result
-                    /*$.ajax({
-                    	url:'{{ route('student.marksheet') }}',
-                    	type:'post',
-                    	data:{
-                    		_token:'{{ csrf_token() }}',
-                    		id:resultId,
-                    	},
-                    	dataType:'html',
-                    	success:function(data){
-                    		$('#ms').html(data);
-                    	//window.focus();
-                    	//window.print();
-                    	},
-                    	error:function(err){
-                    		console.log(JSON.stringify(err));
-                    		alert('err: '+JSON.stringify(err));
-                    	$('#loading').removeClass('d-block').addClass('d-none');
-                    	},
-                    });*/
                 });
             }
             $(document).ajaxStart(function() {

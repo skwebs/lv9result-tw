@@ -48,7 +48,7 @@
 @endphp
 
 @section('content')
-    <p class="p-2 h2 bg-primary text-light">Update Result</p>
+    <p class="h2 bg-primary text-light p-2">Update Result</p>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
@@ -83,7 +83,7 @@
 
                         @if ($message = session('warning'))
                             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                <div class="text-center h3"><strong>Alert!</strong></div>
+                                <div class="h3 text-center"><strong>Alert!</strong></div>
                                 {{ $message }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"
                                     aria-label="Close"></button>
@@ -111,13 +111,13 @@
                             <input type="hidden" name="admit_card_id" value="{{ $stu->id }}">
 
                             <!-- maths -->
-                            <div class="mb-3 col-4 col-md-3">
+                            <div class="col-4 col-md-3 mb-3">
                                 <label for="maths" class="form-label">{{ __('Maths') }} {!! $mandate !!}</label>
 
                                 <input id="maths" type="number"
                                     class="form-control @error('maths') is-invalid @enderror" onkeyup="totalMarks()"
                                     placeholder="Maths" min="0" max="100" name="maths"
-                                    value="{{ old('maths', $result->marks->maths) }}" required autofocus>
+                                    value="{{ old('maths', $result->marks->maths ?? '') }}" required autofocus>
 
                                 @error('maths')
                                     <span class="invalid-feedback" role="alert">
@@ -127,13 +127,13 @@
                             </div>
                             <!-- //name -->
                             <!-- hindi -->
-                            <div class="mb-3 col-4 col-md-3">
+                            <div class="col-4 col-md-3 mb-3">
                                 <label for="hindi" class="form-label">{{ __('Hindi') }}{!! $mandate !!}</label>
 
                                 <input id="hindi" type="number"
                                     class="form-control @error('hindi') is-invalid @enderror" name="hindi"
                                     onkeyup="totalMarks()" placeholder="Hindi" min="0" max="100"
-                                    value="{{ old('hindi', $result->marks->hindi) }}" autofocus required>
+                                    value="{{ old('hindi', $result->marks->hindi ?? '') }}" autofocus required>
 
                                 @error('hindi')
                                     <span class="invalid-feedback" role="alert">
@@ -144,13 +144,13 @@
                             <!-- //hindi -->
 
                             <!-- english -->
-                            <div class="mb-3 col-4 col-md-3">
+                            <div class="col-4 col-md-3 mb-3">
                                 <label for="english" class="form-label">{{ __('English') }}{!! $mandate !!}</label>
 
                                 <input id="english" type="number"
                                     class="form-control @error('english') is-invalid @enderror" name="english"
                                     onkeyup="totalMarks()" placeholder="English" min="0" max="100"
-                                    value="{{ old('english', $result->marks->english) }}" required autofocus>
+                                    value="{{ old('english', $result->marks->english ?? '') }}" required autofocus>
 
                                 @error('english')
                                     <span class="invalid-feedback" role="alert">
@@ -162,14 +162,15 @@
 
                             @if (!in_array($stu->class, $classes))
                                 <!-- sst -->
-                                <div class="mb-3 col-4 col-md-3">
+                                <div class="col-4 col-md-3 mb-3">
                                     <label for="science"
                                         class="form-label">{{ __('Science') }}{!! $mandate !!}</label>
 
                                     <input id="science" type="number"
                                         class="form-control @error('science') is-invalid @enderror" onkeyup="totalMarks()"
                                         placeholder="Science" min="0" max="80"
-                                        value="{{ old('science', $result->marks->science) }}" name="science" required>
+                                        value="{{ old('science', $result->marks->science ?? '') }}" name="science"
+                                        required>
 
                                     @error('science')
                                         <span class="invalid-feedback" role="alert">
@@ -181,14 +182,14 @@
 
 
                                 <!-- science_oral -->
-                                <div class="mb-3 col-4 col-md-3">
+                                <div class="col-4 col-md-3 mb-3">
                                     <label for="science_oral"
                                         class="form-label">{{ __('Sc. Oral') }}{!! $mandate !!}</label>
 
                                     <input id="science_oral" type="number"
                                         class="form-control @error('science_oral') is-invalid @enderror"
                                         onkeyup="totalMarks()" placeholder="Sc. Oral" min="0" max="20"
-                                        value="{{ old('science_oral', $result->marks->science_oral) }}"
+                                        value="{{ old('science_oral', $result->marks->science_oral ?? '') }}"
                                         name="science_oral" pattern="^[0-9]{2}$" required>
 
                                     @error('science_oral')
@@ -200,14 +201,14 @@
                                 <!-- //science_oral -->
 
                                 <!-- sst -->
-                                <div class="mb-3 col-4 col-md-3">
+                                <div class="col-4 col-md-3 mb-3">
                                     <label for="sst"
                                         class="form-label">{{ __('S.St') }}{!! $mandate !!}</label>
 
                                     <input id="sst" type="number"
                                         class="form-control @error('sst') is-invalid @enderror" onkeyup="totalMarks()"
                                         placeholder="S.St" min="0" max="80"
-                                        value="{{ old('sst', $result->marks->sst) }}" name="sst" required>
+                                        value="{{ old('sst', $result->marks->sst ?? '') }}" name="sst" required>
 
                                     @error('sst')
                                         <span class="invalid-feedback" role="alert">
@@ -217,14 +218,14 @@
                                 </div>
                                 <!-- //sst -->
                                 <!-- sst_oral -->
-                                <div class="mb-3 col-4 col-md-3">
+                                <div class="col-4 col-md-3 mb-3">
                                     <label for="sst_oral"
                                         class="form-label">{{ __('S.St. Oral') }}{!! $mandate !!}</label>
 
                                     <input id="sst_oral" type="number"
                                         class="form-control @error('sst_oral') is-invalid @enderror"
                                         onkeyup="totalMarks()" placeholder="S.St. Oral" min="0" max="20"
-                                        value="{{ old('sst_oral', $result->marks->sst_oral) }}" name="sst_oral"
+                                        value="{{ old('sst_oral', $result->marks->sst_oral ?? '') }}" name="sst_oral"
                                         pattern="^[0-9]{2}$" required>
 
                                     @error('sst_oral')
@@ -236,14 +237,14 @@
                                 <!-- //sst_oral -->
 
                                 <!-- computer -->
-                                <div class="mb-3 col-4 col-md-3">
+                                <div class="col-4 col-md-3 mb-3">
                                     <label for="computer"
                                         class="form-label">{{ __('Computer') }}{!! $mandate !!}</label>
 
                                     <input id="computer" type="number"
                                         class="form-control @error('computer') is-invalid @enderror" name="computer"
                                         onkeyup="totalMarks()" placeholder="Computer" min="0" max="100"
-                                        value="{{ old('computer', $result->marks->computer) }}" required
+                                        value="{{ old('computer', $result->marks->computer ?? '') }}" required
                                         autocomplete="computer">
 
                                     @error('computer')
@@ -255,14 +256,14 @@
                                 <!-- //computer -->
 
                                 <!-- gk -->
-                                <div class="mb-3 col-4 col-md-3">
+                                <div class="col-4 col-md-3 mb-3">
                                     <label for="gk"
                                         class="form-label">{{ __('GK') }}{!! $mandate !!}</label>
 
                                     <input id="gk" type="number"
                                         class="form-control @error('gk') is-invalid @enderror" name="gk"
                                         onkeyup="totalMarks()" placeholder="GK" min="0" max="100"
-                                        value="{{ old('gk', $result->marks->gk) }}" required autocomplete="gk">
+                                        value="{{ old('gk', $result->marks->gk ?? '') }}" required autocomplete="gk">
 
                                     @error('gk')
                                         <span class="invalid-feedback" role="alert">
@@ -275,14 +276,15 @@
 
 
                             <!-- drawing -->
-                            <div class="mb-3 col-4 col-md-3">
+                            <div class="col-4 col-md-3 mb-3">
                                 <label for="drawing"
                                     class="form-label">{{ __('Drawing') }}{!! $mandate !!}</label>
 
                                 <input id="drawing" type="number"
                                     class="form-control @error('drawing') is-invalid @enderror" onkeyup="totalMarks()"
                                     placeholder="Drawing" min="0" max="100" name="drawing"
-                                    value="{{ old('drawing', $result->marks->drawing) }}" autocomplete="bday" required>
+                                    value="{{ old('drawing', $result->marks->drawing ?? '') }}" autocomplete="bday"
+                                    required>
 
                                 @error('drawing')
                                     <span class="invalid-feedback" role="alert">
@@ -293,7 +295,7 @@
                             <!-- //drawing -->
 
                             <!-- total -->
-                            <div class="mb-3 col-4 col-md-3">
+                            <div class="col-4 col-md-3 mb-3">
                                 <label for="total" class="form-label">{{ __('Total Marks') }}</label>
 
                                 <input id="total" type="number"
@@ -308,7 +310,7 @@
                             </div>
 
                             <!-- full_marks -->
-                            <div class="mb-3 col-4 col-md-3">
+                            <div class="col-4 col-md-3 mb-3">
                                 <label for="full_marks" class="form-label">{{ __('Full Marks') }}</label>
 
                                 <input id="full_marks" type="number"

@@ -8,6 +8,7 @@
     </style>
 @endsection
 
+
 @section('js')
     @if (!in_array($stu->class, $classes))
         <script type="text/javascript">
@@ -48,7 +49,7 @@
 @endphp
 
 @section('content')
-    <p class="p-2 h2 bg-primary text-light">Upload Result</p>
+    <p class="h2 bg-primary text-light p-2">Upload Result</p>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
@@ -83,7 +84,7 @@
 
                         @if ($message = session('warning'))
                             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                <div class="text-center h3"><strong>Alert!</strong></div>
+                                <div class="h3 text-center"><strong>Alert!</strong></div>
                                 {{ $message }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"
                                     aria-label="Close"></button>
@@ -104,13 +105,13 @@
 
 
                         <form class="row" method="POST"
-                            action="{{ route('result.store', ['class' => $stu->class, 'roll' => $stu->roll, 'session' => '2022-23', 'redirect_to' => url()->previous()]) }}"
+                            action="{{ route('result.store', ['class' => $stu->class, 'roll' => $stu->roll, 'redirect_to' => url()->previous()]) }}"
                             enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="admit_card_id" value="{{ $stu->id }}">
 
                             {{-- maths --}}
-                            <div class="mb-3 col-4 col-md-3">
+                            <div class="col-4 col-md-3 mb-3">
                                 <label for="maths" class="form-label">{{ __('Maths') }} {!! $mandate !!}</label>
 
                                 <input id="maths" type="number"
@@ -126,7 +127,7 @@
                             </div>
 
                             {{-- hindi --}}
-                            <div class="mb-3 col-4 col-md-3">
+                            <div class="col-4 col-md-3 mb-3">
                                 <label for="hindi" class="form-label">{{ __('Hindi') }}{!! $mandate !!}</label>
 
                                 <input id="hindi" type="number"
@@ -142,7 +143,7 @@
                             </div>
 
                             {{-- english --}}
-                            <div class="mb-3 col-4 col-md-3">
+                            <div class="col-4 col-md-3 mb-3">
                                 <label for="english" class="form-label">{{ __('English') }}{!! $mandate !!}</label>
 
                                 <input id="english" type="number"
@@ -159,8 +160,8 @@
 
                             {{-- for 1 and above class --}}
                             @if (!in_array($stu->class, $classes))
-                               {{-- Science --}}
-                                <div class="mb-3 col-4 col-md-3">
+                                {{-- Science --}}
+                                <div class="col-4 col-md-3 mb-3">
                                     <label for="science"
                                         class="form-label">{{ __('Science') }}{!! $mandate !!}</label>
 
@@ -177,7 +178,7 @@
                                 </div>
 
                                 {{-- science oral --}}
-                                <div class="mb-3 col-4 col-md-3">
+                                <div class="col-4 col-md-3 mb-3">
                                     <label for="science_oral"
                                         class="form-label">{{ __('Sc. Oral') }}{!! $mandate !!}</label>
 
@@ -195,8 +196,8 @@
                                 </div>
 
 
-                               {{-- sst --}}
-                                <div class="mb-3 col-4 col-md-3">
+                                {{-- sst --}}
+                                <div class="col-4 col-md-3 mb-3">
                                     <label for="sst"
                                         class="form-label">{{ __('S.St') }}{!! $mandate !!}</label>
 
@@ -213,7 +214,7 @@
                                 </div>
 
                                 {{-- sst oral --}}
-                                <div class="mb-3 col-4 col-md-3">
+                                <div class="col-4 col-md-3 mb-3">
                                     <label for="sst_oral"
                                         class="form-label">{{ __('S.St. Oral') }}{!! $mandate !!}</label>
 
@@ -230,7 +231,7 @@
                                 </div>
 
                                 {{-- computer --}}
-                                <div class="mb-3 col-4 col-md-3">
+                                <div class="col-4 col-md-3 mb-3">
                                     <label for="computer"
                                         class="form-label">{{ __('Computer') }}{!! $mandate !!}</label>
 
@@ -247,7 +248,7 @@
                                 </div>
 
                                 {{-- gk --}}
-                                <div class="mb-3 col-4 col-md-3">
+                                <div class="col-4 col-md-3 mb-3">
                                     <label for="gk"
                                         class="form-label">{{ __('GK') }}{!! $mandate !!}</label>
 
@@ -262,12 +263,11 @@
                                         </span>
                                     @enderror
                                 </div>
-
                             @endif
 
 
                             <!-- drawing -->
-                            <div class="mb-3 col-4 col-md-3">
+                            <div class="col-4 col-md-3 mb-3">
                                 <label for="drawing"
                                     class="form-label">{{ __('Drawing') }}{!! $mandate !!}</label>
 
@@ -285,7 +285,7 @@
                             <!-- //drawing -->
 
                             <!-- total -->
-                            <div class="mb-3 col-4 col-md-3">
+                            <div class="col-4 col-md-3 mb-3">
                                 <label for="total" class="form-label">{{ __('Total Marks') }}</label>
 
                                 <input id="total" type="number"
@@ -300,7 +300,7 @@
                             </div>
 
                             <!-- full_marks -->
-                            <div class="mb-3 col-4 col-md-3">
+                            <div class="col-4 col-md-3 mb-3">
                                 <label for="full_marks" class="form-label">{{ __('Full Marks') }}</label>
 
                                 <input id="full_marks" type="number"

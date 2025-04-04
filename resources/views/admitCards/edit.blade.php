@@ -171,7 +171,7 @@
 
                             <div class="col-md-6">
                                 <input id="dob" type="date" class="form-control @error('dob') is-invalid @enderror"
-                                    name="dob" value="{{ old('dob', $admitCard->dob) }}" autocomplete="bday" required>
+                                    name="dob" value="{{ old('dob', date('Y-m-d',strtotime($admitCard->dob))) }}" autocomplete="bday" required>
 
                                 @error('dob')
                                 <span class="invalid-feedback" role="alert">

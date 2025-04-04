@@ -13,10 +13,31 @@ class ResultController extends Controller
     private $lower_classes;
     private $exist_classes;
 
+    private $financialYear;
+
     public function __construct()
     {
         $this->lower_classes = ['Play', 'Nursery', 'LKG', 'UKG'];
         $this->exist_classes = AdmitCard::distinct()->orderBy('class_order')->pluck('class');
+        $this->financialYear = '2024-2025'; //$this->financialYear();
+    }
+
+    public function financialYear()
+    {
+        $currentYear = date('Y');
+        $currentMonth = date('m');
+
+        // Determine financial year
+        if ($currentMonth > 4) {
+            $startYear = $currentYear;
+            $endYear = $currentYear + 1;
+        } else {
+            $startYear = $currentYear - 1;
+            $endYear = $currentYear;
+        }
+        return "{$startYear}-{$endYear}";
+        // $financialYear = $startYear . '-' . substr($endYear, -2);
+
     }
     /**
      * Display a listing of the resource.
@@ -66,13 +87,23 @@ class ResultController extends Controller
     // public function store(Request $request)
     public function store(StoreResultRequest $request)
     {
+        // dd($request->all());
         $data = [
             'admit_card_id' => $request->admit_card_id,
-            'session' => $request->query('session'),
+            'session' => $this->financialYear,
             'class' => $request->query('class'),
             'roll' => $request->query('roll'),
             'marks' => $request->only([
-                'hindi', 'english', 'maths', 'drawing', 'science', 'sst', 'computer', 'gk', 'science_oral', 'sst_oral',
+                'hindi',
+                'english',
+                'maths',
+                'drawing',
+                'science',
+                'sst',
+                'computer',
+                'gk',
+                'science_oral',
+                'sst_oral',
             ]),
             'total' => $request->total,
             'total_text' => $request->total,
@@ -81,7 +112,7 @@ class ResultController extends Controller
         ];
 
         $r = Result::where([
-            'session' => $request->query('session'),
+            'session' => $this->financialYear,
             'class' => $request->query('class'),
             'roll' => $request->query('roll')
         ])->first();
@@ -165,11 +196,20 @@ class ResultController extends Controller
 
         $data = [
             'admit_card_id' => $request->admit_card_id,
-            'session' => $request->query('session'),
+            'session' => $this->financialYear,
             'class' => $request->query('class'),
             'roll' => $request->query('roll'),
             'marks' => $request->only([
-                'hindi', 'english', 'maths', 'drawing', 'science', 'sst', 'computer', 'gk', 'science_oral', 'sst_oral',
+                'hindi',
+                'english',
+                'maths',
+                'drawing',
+                'science',
+                'sst',
+                'computer',
+                'gk',
+                'science_oral',
+                'sst_oral',
             ]),
             'total' => $request->total,
             'total_text' => $request->total,
@@ -214,10 +254,7 @@ class ResultController extends Controller
      * @param  \App\Models\Result  $result
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Result $result)
-    {
-        //
-    }
+
 
     public function stu_result(Request $req)
     {
@@ -241,7 +278,8 @@ class ResultController extends Controller
         $select .= '<option value="" selected disabled >Select Roll No.</option>';
 
         foreach ($rolls as $roll) {
-            $select .= '<option value="' . $roll->id . '" >' . $roll->roll . '</option>';
+            // $select .= '<option value="' . $roll->id . '" >' . $roll->roll . '</option>';
+            $select .= "<option value=\"$roll->id\" >$roll->roll</option>";
         }
         $select .= '</select>';
         return $select;
