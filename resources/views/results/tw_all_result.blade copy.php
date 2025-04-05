@@ -198,7 +198,7 @@ function res($m)
 
     <body class="A4">
         @foreach ($results as $result)
-            @php
+            {{-- @php
                 $qrData = '';
                 if ($result->admitCard) {
                     $qrData = 'Name: ' . ($result->admitCard->name ?? '--') . ",\n";
@@ -222,7 +222,7 @@ function res($m)
                 } else {
                     $qrData = 'No admit card data available for this result.';
                 }
-            @endphp
+            @endphp --}}
             {{-- @php
                 $qrData = '';
                 $qrData = "Name: {$result->admitCard->name},\n";
@@ -604,7 +604,7 @@ function res($m)
                                     <th class="border border-black px-3 py-2">Obtained Marks %</th>
                                     <th class="border border-black px-3 py-2">Attendance</th>
                                     <th class="border border-black px-3 py-2">Grade</th>
-                                    {{-- <th class="border border-black px-3 py-2">Position in Class</th> --}}
+                                    <th class="border border-black px-3 py-2">Position in Class</th>
                                 </tr>
 
                                 <tr>
@@ -617,15 +617,15 @@ function res($m)
                                     <td class="border border-black px-3 py-2">
                                         {{ res(($result->total * 100) / $result->full_marks)['g'] }}
                                     </td>
-                                    {{-- {{ isset($result->position) ? $result->position : '--' }} --}}
-                                    {{-- <td class="border border-black px-3 py-2">
+                                    <td class="border border-black px-3 py-2">
+                                        {{-- {{ isset($result->position) ? $result->position : '--' }} --}}
                                         @isset($result->position)
                                             {{ $result->position }}
                                         @endisset
                                         @empty($result->position)
                                             --
                                         @endempty
-                                    </td> --}}
+                                    </td>
                                 </tr>
                             </table>
                         </div>
