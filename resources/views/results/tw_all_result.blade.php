@@ -1,95 +1,93 @@
 <?php
 //$r = (array) $result;echo json_encode($r);exit;
 
-if (!function_exists('numToText')) {
-    function numToText($num)
-    {
-        $ones = [
-            0 => 'zero',
-            1 => 'one',
-            2 => 'two',
-            3 => 'three',
-            4 => 'four',
-            5 => 'five',
-            6 => 'six',
-            7 => 'seven',
-            8 => 'eight',
-            9 => 'nine',
-            10 => 'ten',
-            11 => 'eleven',
-            12 => 'twelve',
-            13 => 'thirteen',
-            14 => 'fourteen',
-            15 => 'fifteen',
-            16 => 'sixteen',
-            17 => 'seventeen',
-            18 => 'eighteen',
-            19 => 'nineteen',
-            '014' => 'fourteen',
-        ];
-        $tens = [
-            0 => 'zero',
-            1 => 'ten',
-            2 => 'twenty',
-            3 => 'thirty',
-            4 => 'forty',
-            5 => 'fifty',
-            6 => 'sixty',
-            7 => 'seventy',
-            8 => 'eighty',
-            9 => 'ninety',
-        ];
-        $hundreds = ['hundred', 'thousand', 'million', 'billion', 'trillion', 'quardrillion']; /*limit t quadrillion */
-        if ($num == 0) {
-            return $ones[0];
-        } else {
-            $num = number_format($num, 2, '.', ',');
-            $num_arr = explode('.', $num);
-            $wholenum = $num_arr[0];
-            $decnum = $num_arr[1];
-            $whole_arr = array_reverse(explode(',', $wholenum));
-            krsort($whole_arr, 1);
-            $rettxt = '';
-            foreach ($whole_arr as $key => $i) {
-                while (substr($i, 0, 1) == '0') {
-                    $i = substr($i, 1, 5);
+function numToText($num)
+{
+    $ones = [
+        0 => 'zero',
+        1 => 'one',
+        2 => 'two',
+        3 => 'three',
+        4 => 'four',
+        5 => 'five',
+        6 => 'six',
+        7 => 'seven',
+        8 => 'eight',
+        9 => 'nine',
+        10 => 'ten',
+        11 => 'eleven',
+        12 => 'twelve',
+        13 => 'thirteen',
+        14 => 'fourteen',
+        15 => 'fifteen',
+        16 => 'sixteen',
+        17 => 'seventeen',
+        18 => 'eighteen',
+        19 => 'nineteen',
+        '014' => 'fourteen',
+    ];
+    $tens = [
+        0 => 'zero',
+        1 => 'ten',
+        2 => 'twenty',
+        3 => 'thirty',
+        4 => 'forty',
+        5 => 'fifty',
+        6 => 'sixty',
+        7 => 'seventy',
+        8 => 'eighty',
+        9 => 'ninety',
+    ];
+    $hundreds = ['hundred', 'thousand', 'million', 'billion', 'trillion', 'quardrillion']; /*limit t quadrillion */
+    if ($num == 0) {
+        return $ones[0];
+    } else {
+        $num = number_format($num, 2, '.', ',');
+        $num_arr = explode('.', $num);
+        $wholenum = $num_arr[0];
+        $decnum = $num_arr[1];
+        $whole_arr = array_reverse(explode(',', $wholenum));
+        krsort($whole_arr, 1);
+        $rettxt = '';
+        foreach ($whole_arr as $key => $i) {
+            while (substr($i, 0, 1) == '0') {
+                $i = substr($i, 1, 5);
+            }
+            if ($i < 20) {
+                /* echo "getting:".$i; */
+                $rettxt .= $ones[$i];
+            } elseif ($i < 100) {
+                if (substr($i, 0, 1) != '0') {
+                    $rettxt .= $tens[substr($i, 0, 1)];
                 }
-                if ($i < 20) {
-                    /* echo "getting:".$i; */
-                    $rettxt .= $ones[$i];
-                } elseif ($i < 100) {
-                    if (substr($i, 0, 1) != '0') {
-                        $rettxt .= $tens[substr($i, 0, 1)];
-                    }
-                    if (substr($i, 1, 1) != '0') {
-                        $rettxt .= ' ' . $ones[substr($i, 1, 1)];
-                    }
-                } else {
-                    if (substr($i, 0, 1) != '0') {
-                        $rettxt .= $ones[substr($i, 0, 1)] . ' ' . $hundreds[0];
-                    }
-                    if (substr($i, 1, 1) != '0') {
-                        $rettxt .= ' ' . $tens[substr($i, 1, 1)];
-                    }
-                    if (substr($i, 2, 1) != '0') {
-                        $rettxt .= ' ' . $ones[substr($i, 2, 1)];
-                    }
+                if (substr($i, 1, 1) != '0') {
+                    $rettxt .= ' ' . $ones[substr($i, 1, 1)];
                 }
-                if ($key > 0) {
-                    $rettxt .= ' ' . $hundreds[$key] . ' ';
+            } else {
+                if (substr($i, 0, 1) != '0') {
+                    $rettxt .= $ones[substr($i, 0, 1)] . ' ' . $hundreds[0];
+                }
+                if (substr($i, 1, 1) != '0') {
+                    $rettxt .= ' ' . $tens[substr($i, 1, 1)];
+                }
+                if (substr($i, 2, 1) != '0') {
+                    $rettxt .= ' ' . $ones[substr($i, 2, 1)];
                 }
             }
-            if ($decnum > 0) {
-                $rettxt .= ' and ';
-                if ($decnum < 20) {
-                    $rettxt .= $ones[$decnum];
-                } elseif ($decnum < 100) {
-                    $rettxt .= $tens[substr($decnum, 0, 1)];
-                    $rettxt .= ' ' . $ones[substr($decnum, 1, 1)];
-                }
+            if ($key > 0) {
+                $rettxt .= ' ' . $hundreds[$key] . ' ';
             }
-            return $rettxt;
         }
+        if ($decnum > 0) {
+            $rettxt .= ' and ';
+            if ($decnum < 20) {
+                $rettxt .= $ones[$decnum];
+            } elseif ($decnum < 100) {
+                $rettxt .= $tens[substr($decnum, 0, 1)];
+                $rettxt .= ' ' . $ones[substr($decnum, 1, 1)];
+            }
+        }
+        return $rettxt;
     }
 }
 ?>
@@ -200,39 +198,15 @@ function res($m)
         @foreach ($results as $result)
             @php
                 $qrData = '';
-                if ($result->admitCard) {
-                    $qrData = 'Name: ' . ($result->admitCard->name ?? '--') . ",\n";
-                    $qrData .= 'DoB : ' . ($result->admitCard->dob ?? '-') . ",\n";
-                    $qrData = "Father's Name: " . ($result->admitCard->father ?? '--') . ",\n";
-                    $qrData .= 'Mother: ' . ($result->admitCard->mother ?? '--') . ",\n";
-                    $qrData .= "Session: {$result->session},\n";
-                    $qrData .=
-                        'Class: ' .
-                        ($result->admitCard->class ?? '--') .
-                        ', Roll: ' .
-                        ($result->admitCard->roll ?? '--') .
-                        ",\n";
-                    $qrData .= "Obtained Marks: {$result->total}/{$result->full_marks},\n";
-                    $qrData .= 'Position in class: ' . ($result->position ?? '--') . "\n";
-                    $qrData .= "\n";
-                    $qrData .= "Marks:\n";
-                    foreach ($result->marks as $subject => $mark) {
-                        $qrData .= "$subject: $mark\n";
-                    }
-                } else {
-                    $qrData = 'No admit card data available for this result.';
-                }
-            @endphp
-            {{-- @php
-                $qrData = '';
                 $qrData = "Name: {$result->admitCard->name},\n";
+                // $qrData .= "DoB : {$result->admitCard->dob},\n";
                 $qrData .= 'DoB : ' . ($result->admitCard->dob ?? '-') . ",\n";
                 $qrData .= "Father's Name: {$result->admitCard->father},\n";
                 $qrData .= "Mother: {$result->admitCard->mother},\n";
                 $qrData .= "Session: {$result->session},\n";
                 $qrData .= "Class: {$result->admitCard->class}, Roll: {$result->admitCard->roll},\n";
                 $qrData .= "Obtained Marks: {$result->total}/{$result->full_marks},\n";
-                $qrData .= "Position in class: {$result->position}\n";
+                // $qrData .= "Position in class: {$result->position}\n";
                 $qrData .= "\n";
                 $qrData .= "Marks:\n";
                 // $qrData .= 'Science: ' . $result->marks->science . "\n";
@@ -241,7 +215,7 @@ function res($m)
                     $qrData .= "$subject: $mark\n"; // Use double quotes and variable interpolation
                 }
 
-            @endphp --}}
+            @endphp
             <!-- page -->
             <section class="sheet flex flex-col p-4">
                 <!-- main content -->
@@ -282,7 +256,7 @@ function res($m)
                     <div class="p-0">
                         <!-- result type -->
                         <div>
-                            <div class="text-semibold w-full border-t-2 border-black text-center">
+                            <div class="w-full border-t-2 border-black text-center">
                                 <div>REPORT CARD [ANNUAL EXAMINATION]</div>
                                 <div>SESSION {{ $result->session }}</div>
                             </div>
@@ -297,8 +271,7 @@ function res($m)
                                                 <th class="whitespace-nowrap px-3 py-2">Name</th>
                                                 <td class="whitespace-nowrap px-3 py-2">:</td>
                                                 <td class="whitespace-nowrap px-3 py-2">
-                                                    {{ $result->admitCard->name ?? '--' }}
-                                                </td>
+                                                    {{ $result->admitCard->name }}</td>
                                                 <th class="whitespace-nowrap px-3 py-2">Class</th>
                                                 <td class="whitespace-nowrap px-3 py-2">:</td>
                                                 <td class="whitespace-nowrap px-3 py-2">{{ $result->admitCard->class }}
@@ -349,8 +322,8 @@ function res($m)
                                         <div class="h-[180px] w-[150px] border-2 border-black">
                                             <!-- <div class="aspect-[20/23] border border-black"> -->
                                             {{-- <img src="./person.jpg" class="w-full h-full aspect-[4/3]" alt="student image" /> --}}
-                                            {{-- <img src="{{ $result->admitCard->image ? asset('uploads/images/students/' . $result->admitCard->image) : asset('images/static/paste-image.webp') }}"
-                                                class="aspect-[4/3] h-full w-full" alt="student image" /> --}}
+                                            <img src="{{ $result->admitCard->image ? asset('uploads/images/students/' . $result->admitCard->image) : asset('images/static/paste-image.webp') }}"
+                                                class="aspect-[4/3] h-full w-full" alt="student image" />
                                         </div>
                                     </div>
                                     <!-- /student picture -->
@@ -416,12 +389,13 @@ function res($m)
                                                 @endif
                                             </td>
                                             <td class="whitespace-nowrap px-3 py-2">
+                                                {{-- {{ isset($result->marks->science) ? $result->marks->science : '--' }} --}}
                                                 {{ $result->marks->science ?? '--' }}
                                             </td>
                                             <td class="whitespace-nowrap px-3 py-2">
                                                 {{ $result->marks->science_oral ?? '--' }}
                                             </td>
-
+                                            </td>
                                             <td class="whitespace-nowrap px-3 py-2">
                                                 {{-- {{ isset($result->marks->scince_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science }} --}}
                                                 @if (!in_array($result->admitCard->class, $classes))
@@ -430,7 +404,6 @@ function res($m)
                                                     --
                                                 @endif
                                             </td>
-
                                             <td class="whitespace-nowrap px-3 py-2">
                                                 @if (!in_array($result->admitCard->class, $classes))
                                                     {{ res(isset($result->marks->science_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science)['g'] }}
@@ -459,15 +432,15 @@ function res($m)
 
                                                 @if (!in_array($result->admitCard->class, $classes))
                                                     {{ isset($result->marks->sst_oral) ? $result->marks->sst + $result->marks->sst_oral : $result->marks->sst }}
+                                                    {{-- {{ res(isset($result->marks->scince_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science)['g'] }} --}}
                                                 @else
                                                     --
                                                 @endif
                                             </td>
-
                                             <td class="whitespace-nowrap px-3 py-2">
                                                 @if (!in_array($result->admitCard->class, $classes))
-                                                    {{-- {{ res(isset($result->marks->scince_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science)['g'] }} --}}
-                                                    {{ res(isset($result->marks->scince_oral) ? $result->marks->sst + $result->marks->sst_oral : $result->marks->sst)['g'] }}
+                                                    {{-- {{ res(isset($result->marks->sst_oral) ? $result->marks->sst + $result->marks->sst_oral : $result->marks->sst)['g'] }} --}}
+                                                    {{ res(isset($result->marks->sst_oral) ? $result->marks->sst + $result->marks->sst_oral : $result->marks->sst)['g'] }}
                                                 @else
                                                     --
                                                 @endif
@@ -486,6 +459,7 @@ function res($m)
                                             <td class="whitespace-nowrap px-3 py-2">
                                                 @if (!in_array($result->admitCard->class, $classes))
                                                     {{ $result->marks->computer }}
+                                                    {{-- {{ res(isset($result->marks->scince_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science)['g'] }} --}}
                                                 @else
                                                     --
                                                 @endif
@@ -494,12 +468,14 @@ function res($m)
                                             <td class="whitespace-nowrap px-3 py-2">
                                                 @if (!in_array($result->admitCard->class, $classes))
                                                     {{ $result->marks->computer }}
+                                                    {{-- {{ res(isset($result->marks->scince_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science)['g'] }} --}}
                                                 @else
                                                     --
                                                 @endif
                                             </td>
                                             <td class="whitespace-nowrap px-3 py-2">
                                                 @if (!in_array($result->admitCard->class, $classes))
+                                                    {{-- {{ res(isset($result->marks->scince_oral) ? $result->marks->science + $result->marks->science_oral : $result->marks->science)['g'] }} --}}
                                                     {{ res($result->marks->computer)['g'] }}
                                                 @else
                                                     --
@@ -546,6 +522,7 @@ function res($m)
                                 </table>
                                 <div class="w-[200px]">
                                     <div class="aspect-square w-full border border-black">
+
                                         {{-- {!! QrCode::size(150, 150)->margin(2)->generate($qrData) !!} --}}
                                         <img src="data:image/png;base64, {!! base64_encode(
                                             QrCode::size(1024, 1024)->margin(2)->format('png')->merge(public_path('/images/static/ama-old-128.png'), 0.3, true)->errorCorrection('H')->generate($qrData),
@@ -602,7 +579,7 @@ function res($m)
                                 <tr>
                                     <th class="border border-black px-3 py-2">Obtained Marks</th>
                                     <th class="border border-black px-3 py-2">Obtained Marks %</th>
-                                    <th class="border border-black px-3 py-2">Attendance</th>
+                                    {{-- <th class="border border-black px-3 py-2">Attendance</th> --}}
                                     <th class="border border-black px-3 py-2">Grade</th>
                                     {{-- <th class="border border-black px-3 py-2">Position in Class</th> --}}
                                 </tr>
@@ -613,19 +590,19 @@ function res($m)
                                     <td class="border border-black px-3 py-2">
                                         {{ round(($result->total * 100) / $result->full_marks, 2) }}%
                                     </td>
-                                    <td class="border border-black px-3 py-2">--</td>
+                                    {{-- <td class="border border-black px-3 py-2">--</td> --}}
                                     <td class="border border-black px-3 py-2">
                                         {{ res(($result->total * 100) / $result->full_marks)['g'] }}
                                     </td>
                                     {{-- {{ isset($result->position) ? $result->position : '--' }} --}}
                                     {{-- <td class="border border-black px-3 py-2">
-                                        @isset($result->position)
-                                            {{ $result->position }}
-                                        @endisset
-                                        @empty($result->position)
-                                            --
-                                        @endempty
-                                    </td> --}}
+                                    @isset($result->position)
+                                        {{ $result->position }}
+                                    @endisset
+                                    @empty($result->position)
+                                        --
+                                    @endempty
+                                </td> --}}
                                 </tr>
                             </table>
                         </div>
