@@ -54,7 +54,7 @@ class AdmitCardController extends Controller
             'mother'    => 'required',
             'father'    => 'required',
             'gender'    => 'required',
-            'dob'       => 'date|required',
+            'dob'       => 'date|nullable',
             'mobile'    => 'regex:/^[6-9][0-9]{9}/i',
             'address'   => 'required',
             'class'     => 'required',
