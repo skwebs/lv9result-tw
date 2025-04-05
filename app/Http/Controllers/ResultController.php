@@ -357,6 +357,7 @@ class ResultController extends Controller
 
         $classes = $this->lower_classes;
 
+
         return view('results.tw_all_result', compact('results', 'classes'));
         // return view('results.all_result', compact('results', 'classes'));
     }
