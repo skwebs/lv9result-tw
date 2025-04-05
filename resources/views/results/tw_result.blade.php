@@ -384,7 +384,7 @@ function res($m)
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-2">
                                             {{-- {{ isset($result->marks->science) ? $result->marks->science : '--' }} --}}
-                                            {{ $result->marks->science_oral ?? '--' }}
+                                            {{ $result->marks->science ?? '--' }}
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-2">
                                             {{ $result->marks->science_oral ?? '--' }}
