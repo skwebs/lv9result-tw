@@ -199,8 +199,7 @@ function res($m)
             @php
                 $qrData = '';
                 $qrData = "Name: {$result->admitCard->name},\n";
-                $qrData .= "DoB : {$result->admitCard->dob},\n";
-
+                $qrData .= 'DoB : ' . ($result->admitCard->dob ?? '-') . ",\n";
                 $qrData .= "Father's Name: {$result->admitCard->father},\n";
                 $qrData .= "Mother: {$result->admitCard->mother},\n";
                 $qrData .= "Session: {$result->session},\n";
@@ -301,7 +300,12 @@ function res($m)
                                                 <th class="whitespace-nowrap px-3 py-2">Date of Birth</th>
                                                 <td class="whitespace-nowrap px-3 py-2">:</td>
                                                 <td class="whitespace-nowrap px-3 py-2">
-                                                    {{ date('d-m-Y', strtotime($result->admitCard->dob)) }}</td>
+                                                    @if ($result->admitCard->dob)
+                                                        {{ date('d-m-Y', strtotime($result->admitCard->dob)) }}
+                                                    @else
+                                                        --
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th class="whitespace-nowrap px-3 py-2">Address</th>

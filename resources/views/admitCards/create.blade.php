@@ -69,17 +69,17 @@ $mandate = '<span class="text-danger mandate" >*</span>';
                         @endif
 
                         <!--
-                            @if (count($errors) > 0)
+                                    @if (count($errors) > 0)
     <div class="alert alert-danger">
-                                <strong>Whoops!</strong> There were some problems with your input.
-                                <ul>
-                                    @foreach ($errors->all() as $error)
+                                        <strong>Whoops!</strong> There were some problems with your input.
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
     <li>{{ $error }}</li>
     @endforeach
-                                </ul>
-                            </div>
+                                        </ul>
+                                    </div>
     @endif
-                            -->
+                                    -->
 
                         <form method="POST" action="{{ route('admitCard.store') }}" enctype="multipart/form-data">
                             @csrf
@@ -177,12 +177,12 @@ $mandate = '<span class="text-danger mandate" >*</span>';
                             <!-- date of birth -->
                             <div class="row mb-3">
                                 <label for="dob"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('Date of Birth') }}{!! $mandate !!}</label>
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Date of Birth') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="dob" type="date"
                                         class="form-control @error('dob') is-invalid @enderror" name="dob"
-                                        value="{{ old('dob') }}" autocomplete="bday" required>
+                                        value="{{ old('dob') }}" autocomplete="bday">
 
                                     @error('dob')
                                         <span class="invalid-feedback" role="alert">
@@ -282,18 +282,18 @@ $mandate = '<span class="text-danger mandate" >*</span>';
                                         <option @if (old('class') == 'Std.5') selected @endif value="Std.5">Std.5
                                         </option>
                                         <!-- <option value="Std.5">Std. 5</option>
-                                            <option value="Std.6">Std. 6</option>
-                                            <option value="Std.7">Std. 7</option>
-                                            <option value="Std.8">Std. 8</option>
-                                            <option value="Std.9">Std. 9</option>
-                                            <option value="Std.10">Std. 10</option>
-                                            <option value="Std.11">Std. 11</option>
-                                            <option value="Std.12">Std. 12</option> -->
+                                                    <option value="Std.6">Std. 6</option>
+                                                    <option value="Std.7">Std. 7</option>
+                                                    <option value="Std.8">Std. 8</option>
+                                                    <option value="Std.9">Std. 9</option>
+                                                    <option value="Std.10">Std. 10</option>
+                                                    <option value="Std.11">Std. 11</option>
+                                                    <option value="Std.12">Std. 12</option> -->
                                     </select>
 
                                     <!-- <input id="class" type="number"
-                                            class="form-control @error('class') is-invalid @enderror" name="class" required
-                                            autocomplete="class"> -->
+                                                    class="form-control @error('class') is-invalid @enderror" name="class" required
+                                                    autocomplete="class"> -->
 
                                     @error('class')
                                         <span class="invalid-feedback" role="alert">
@@ -325,50 +325,50 @@ $mandate = '<span class="text-danger mandate" >*</span>';
                             <!-- //roll no. -->
 
                             <!-- student type
-                                <div class="row mb-3">
-                                    <label class="col-md-4 col-form-label text-md-end">{{ __('Student Type') }}{!! $mandate !!}</label>
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-form-label text-md-end">{{ __('Student Type') }}{!! $mandate !!}</label>
 
-                                    <div class="col-md-6 pt-md-2">
+                                            <div class="col-md-6 pt-md-2">
 
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input @error('student_type') is-invalid @enderror"
-                                                 @if (old('student_type') == 'Existing') checked @endif type="radio" name="student_type" id="existing" value="Existing" required
-                                                autofocus>
-                                            <label class="form-check-label" for="existing">Existing</label>
-                                        </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input @error('student_type') is-invalid @enderror"
+                                                         @if (old('student_type') == 'Existing') checked @endif type="radio" name="student_type" id="existing" value="Existing" required
+                                                        autofocus>
+                                                    <label class="form-check-label" for="existing">Existing</label>
+                                                </div>
 
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input @error('student_type') is-invalid @enderror"
-                                                 @if (old('student_type') == 'New') checked @endif type="radio" name="student_type" id="new" value="New" required autofocus>
-                                            <label class="form-check-label" for="new">New</label>
-                                        </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input @error('student_type') is-invalid @enderror"
+                                                         @if (old('student_type') == 'New') checked @endif type="radio" name="student_type" id="new" value="New" required autofocus>
+                                                    <label class="form-check-label" for="new">New</label>
+                                                </div>
 
-                                        @error('student_type')
+                                                @error('student_type')
         <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
     @enderror
-                                    </div>
-                                </div>
-                                <input type="hidden" name="created_by"  value="{{ auth()->user()->name }}" >
-                                <!-- //student type -->
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="created_by"  value="{{ auth()->user()->name }}" >
+                                        <!-- //student type -->
 
                             <!-- image
-                                <div class="row mb-3">
-                                    <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('Image*') }}</label>
+                                        <div class="row mb-3">
+                                            <label for="image" class="col-md-4 col-form-label text-md-end">{{ __('Image*') }}</label>
 
-                                    <div class="col-md-6">
-                                        <input id="image" type="file" class="form-control @error('image') is-invalid @enderror"
-                                            name="image" aria-label="file example" accept="image/jpeg, image/png" required>
+                                            <div class="col-md-6">
+                                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror"
+                                                    name="image" aria-label="file example" accept="image/jpeg, image/png" required>
 
-                                        @error('image')
+                                                @error('image')
         <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
     @enderror
-                                    </div>
-                                </div>
-                                 //image -->
+                                            </div>
+                                        </div>
+                                         //image -->
 
                             <!-- submit button -->
                             <div class="row mb-0">
