@@ -200,7 +200,7 @@ function res($m)
             $qrData = '';
             $qrData = "Name: {$result->admitCard->name},\n";
             // $qrData .= "DoB : {$result->admitCard->dob},\n";
-            $qrData .= 'DoB : ' . ($result->admitCard->dob ?? '-') . ",\n";
+            // $qrData .= 'DoB : ' . ($result->admitCard->dob ?? '-') . ",\n";
             $qrData .= "Father's Name: {$result->admitCard->father},\n";
             $qrData .= "Mother: {$result->admitCard->mother},\n";
             $qrData .= "Session: {$result->session},\n";
@@ -294,7 +294,7 @@ function res($m)
                                             <td class="whitespace-nowrap px-3 py-2">:</td>
                                             <td class="whitespace-nowrap px-3 py-2">A</td>
                                         </tr>
-                                        <tr>
+                                        {{-- <tr>
                                             <th class="whitespace-nowrap px-3 py-2">Date of Birth</th>
                                             <td class="whitespace-nowrap px-3 py-2">:</td>
                                             <td class="whitespace-nowrap px-3 py-2">
@@ -304,7 +304,7 @@ function res($m)
                                                     --
                                                 @endif
                                             </td>
-                                        </tr>
+                                        </tr> --}}
                                         <tr>
                                             <th class="whitespace-nowrap px-3 py-2">Address</th>
                                             <td class="whitespace-nowrap px-3 py-2">:</td>

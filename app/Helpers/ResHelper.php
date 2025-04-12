@@ -4,47 +4,59 @@ namespace App\Helpers;
 
 class ResHelper
 {
-    public static function getRes($num)
+    public static function getRes($res)
     {
-        $ones = [
-            0 => 'zero',
-            1 => 'one',
-            2 => 'two',
-            3 => 'three',
-            4 => 'four',
-            5 => 'five',
-            6 => 'six',
-            7 => 'seven',
-            8 => 'eight',
-            9 => 'nine',
-            10 => 'ten',
-            11 => 'eleven',
-            12 => 'twelve',
-            13 => 'thirteen',
-            14 => 'fourteen',
-            15 => 'fifteen',
-            16 => 'sixteen',
-            17 => 'seventeen',
-            18 => 'eighteen',
-            19 => 'nineteen',
-        ];
-        $tens = [
-            0 => '',
-            1 => '',
-            2 => 'twenty',
-            3 => 'thirty',
-            4 => 'forty',
-            5 => 'fifty',
-            6 => 'sixty',
-            7 => 'seventy',
-            8 => 'eighty',
-            9 => 'ninety'
-        ];
-        $hundreds = ['hundred', 'thousand', 'million', 'billion', 'trillion', 'quardrillion']; /*limit t quadrillion */
-        if ($num == '') {
-            return $ones[0];
-        } else {
-            $num = number_format($num, 2, '.', ',');
-            $num_arr = explode('.', $num);
-            $wholenum = $num_arr[0];
-            $decnum = $num_arr[1];
+        function res($m)
+        {
+            if ($m >= 91) {
+                return [
+                    'g' => 'A+',
+                    'r' => 'Result is excellent. Keep it up.',
+                    'c' => 'success text-light',
+                ];
+            } elseif ($m >= 81) {
+                return [
+                    'g' => 'A',
+                    'r' => 'Result is best but need keep it up.',
+                    'c' => 'success text-light',
+                ];
+            } elseif ($m >= 71) {
+                return [
+                    'g' => 'B+',
+                    'r' => 'Result is better Need improve & keep it up.',
+                    'c' => 'success text-light',
+                ];
+            } elseif ($m >= 61) {
+                return [
+                    'g' => 'B',
+                    'r' => 'Result is good but not fair. Increase hard work.',
+                    'c' => 'warning',
+                ];
+            } elseif ($m >= 51) {
+                return [
+                    'g' => 'C+',
+                    'r' => 'Result is average! Increase hard work.',
+                    'c' => 'warning',
+                ];
+            } elseif ($m >= 41) {
+                return [
+                    'g' => 'C',
+                    'r' => 'Result is below to average. Do hard work to improve it.',
+                    'c' => 'warning',
+                ];
+            } elseif ($m >= 33) {
+                return [
+                    'g' => 'D',
+                    'r' => 'Result is poor. Need much hard work to improve it.',
+                    'c' => 'danger text-light',
+                ];
+            } else {
+                return [
+                    'g' => 'E',
+                    'r' => 'Result is very poor. Need very much hard work to improve it.',
+                    'c' => 'danger text-light',
+                ];
+            }
+        }
+    }
+}
